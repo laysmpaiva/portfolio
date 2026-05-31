@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+const { title = 'Lays Paiva — Growth Marketer for SaaS, Startups & AI', description = 'Growth marketer scaling SaaS, startup and AI products with paid acquisition, conversion-first creative, and AI-built tooling.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <script is:inline>
+      // mark JS available before paint so reveal animations don't flash
+      document.documentElement.classList.add('js');
+      // failsafe: if motion never initializes (script/CDN/dep failure),
+      // force-reveal everything so the page is never blank.
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          if (!window.__motionReady) {
+            document.querySelectorAll('.reveal').forEach(function (el) {
+              el.classList.add('is-in');
+            });
+          }
+        }, 1500);
+      });
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

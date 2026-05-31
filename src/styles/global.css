@@ -1,0 +1,193 @@
+/* ============================================================
+   LAYS PAIVA — PORTFOLIO
+   Neobrutalist scrapbook design system
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Caveat:wght@600;700&display=swap');
+
+:root {
+  /* paper + ink */
+  --paper:    #F2ECD9;
+  --paper-2:  #FBF6E7;
+  --ink:      #141210;
+  --ink-soft: #3a3631;
+
+  /* signature palette */
+  --acid:   #C9F227;  /* primary highlight — Lays' signature green */
+  --coral:  #FF5A36;
+  --cobalt: #2D4DFF;
+  --sun:    #FFC93C;
+  --lilac:  #C7B4FF;
+  --pink:   #FF8FCF;
+
+  /* mechanics */
+  --bd: 3px;
+  --radius: 4px;
+  --shadow: 6px 6px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-lg: 10px 10px 0 var(--ink);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --font-hand: 'Caveat', cursive;
+
+  --maxw: 1240px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(var(--ink) 1.1px, transparent 1.1px);
+  background-size: 22px 22px;
+  background-position: -8px -8px;
+  color: var(--ink);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- type ---------- */
+h1, h2, h3, h4 { line-height: 0.98; font-weight: 700; letter-spacing: -0.02em; }
+
+.display {
+  font-size: clamp(3rem, 11vw, 9.5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+a { color: inherit; }
+
+/* ---------- layout ---------- */
+.wrap { width: min(100% - 2.5rem, var(--maxw)); margin-inline: auto; }
+
+section { position: relative; padding-block: clamp(4rem, 9vw, 8rem); }
+
+/* ---------- primitives ---------- */
+.card {
+  background: var(--paper-2);
+  border: var(--bd) solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.32em 0.7em;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper-2);
+  white-space: nowrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 0.85em 1.4em;
+  border: var(--bd) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--acid);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow); }
+.btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.btn--ghost { background: var(--paper-2); }
+.btn--coral { background: var(--coral); color: var(--paper-2); }
+.btn--cobalt { background: var(--cobalt); color: var(--paper-2); }
+
+/* highlighter marker behind text */
+.mark {
+  background-image: linear-gradient(var(--acid), var(--acid));
+  background-repeat: no-repeat;
+  background-size: 100% 38%;
+  background-position: 0 78%;
+  padding: 0 .06em;
+}
+.mark--coral { background-image: linear-gradient(var(--coral), var(--coral)); }
+.mark--sun  { background-image: linear-gradient(var(--sun), var(--sun)); }
+.mark--lilac{ background-image: linear-gradient(var(--lilac), var(--lilac)); }
+
+/* scrapbook "tape" strip */
+.tape {
+  position: absolute;
+  width: 96px; height: 30px;
+  background: rgba(255,201,60,0.62);
+  border: 1px dashed rgba(20,18,16,0.35);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  z-index: 5;
+}
+
+/* sticker badge */
+.sticker {
+  display: inline-grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  border: var(--bd) solid var(--ink);
+  border-radius: 999px;
+  background: var(--acid);
+  box-shadow: var(--shadow-sm);
+}
+
+/* rotation helpers */
+.r-1 { transform: rotate(-2deg); }
+.r-2 { transform: rotate(1.5deg); }
+.r-3 { transform: rotate(-1deg); }
+.r-4 { transform: rotate(2.5deg); }
+
+/* ---------- reveal (GSAP toggles .is-in; CSS is the no-JS fallback) ---------- */
+.reveal { opacity: 1; }
+html.js .reveal { opacity: 0; transform: translateY(28px); }
+html.js .reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- utilities ---------- */
+.center { text-align: center; }
+.muted { color: var(--ink-soft); }
+.mono { font-family: var(--font-mono); }
+.grid { display: grid; gap: 1.5rem; }
+.flex { display: flex; }
+.hidden-sm { }
+@media (max-width: 720px) {
+  :root { --shadow: 4px 4px 0 var(--ink); --shadow-lg: 6px 6px 0 var(--ink); }
+}
