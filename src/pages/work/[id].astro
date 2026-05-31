@@ -33,8 +33,18 @@ const { c, next } = Astro.props;
             <p class="cs__headline">{c.headline}</p>
           </div>
           <figure class="cs__hero-shot r-2">
-            <img src={c.image} alt={`${c.client} ad — ${c.adName}`} width="300" height="533" loading="eager" />
-            <figcaption class="creative__cap mono">{c.adName}</figcaption>
+            {c.image ? (
+              <>
+                <img class="cs__hero-ad" src={c.image} alt={`${c.client} ad — ${c.adName}`} width="300" height="533" loading="eager" />
+                {c.adName ? <figcaption class="creative__cap mono">{c.adName}</figcaption> : null}
+              </>
+            ) : c.face ? (
+              <img class="cs__hero-face" src={c.face} alt={c.person} width="240" height="240" loading="eager" />
+            ) : c.logo ? (
+              <img class="cs__hero-logo" src={c.logo} alt={`${c.client} logo`} loading="eager" />
+            ) : c.emoji ? (
+              <span class="cs__hero-emoji" aria-hidden="true">{c.emoji}</span>
+            ) : null}
           </figure>
         </div>
       </div>
@@ -57,7 +67,7 @@ const { c, next } = Astro.props;
 
       <!-- metrics -->
       <h2 class="cs__h reveal">The numbers</h2>
-      <p class="cs__note mono muted reveal">Managed ad spend is windowed to my time on the account — not the lifetime account total.</p>
+      {c.spendKey ? <p class="cs__note mono muted reveal">Managed ad spend is windowed to my time on the account — not the lifetime account total.</p> : null}
       <div class="cs__metrics">
         {c.metrics.map((m) => (
           <div class="metric card reveal">
@@ -69,16 +79,21 @@ const { c, next } = Astro.props;
       </div>
 
       <!-- ad gallery -->
-      <h2 class="cs__h reveal">The ads <span class="cs__count mono">{c.gallery.length} creatives</span></h2>
-      <div class="cs__gallery">
-        {c.gallery.map((g, i) => (
-          <figure class={`ad reveal r-${(i % 4) + 1}`}>
-            <img src={g.src} alt={g.label} loading="lazy" width="300" height="533" />
-            <figcaption class="ad__cap mono">{g.label}</figcaption>
-            <span class="tape ad__tape" aria-hidden="true"></span>
-          </figure>
-        ))}
-      </div>
+      {c.gallery && c.gallery.length ? (
+        <>
+          <h2 class="cs__h reveal">The ads <span class="cs__count mono">{c.gallery.length} creatives</span></h2>
+          <div class="cs__gallery">
+            {c.gallery.map((g, i) => (
+              <figure class={`ad reveal r-${(i % 4) + 1}`}>
+                <img src={g.src} alt={g.label} loading="lazy" width="300" height="533" />
+                {g.video ? <span class="ad__play" aria-hidden="true">▶</span> : null}
+                <figcaption class="ad__cap mono">{g.label}</figcaption>
+                <span class="tape ad__tape" aria-hidden="true"></span>
+              </figure>
+            ))}
+          </div>
+        </>
+      ) : null}
     </section>
 
     <!-- next -->
@@ -101,8 +116,13 @@ const { c, next } = Astro.props;
   .cs__title { font-size: clamp(2.6rem, 8vw, 6rem); margin: 0.6rem 0 0.4rem; text-transform: uppercase; }
   .cs__person { font-weight: 700; font-size: 0.9rem; }
   .cs__headline { font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 600; line-height: 1.25; margin-top: 1rem; max-width: 26ch; }
-  .cs__hero-shot { margin: 0; justify-self: center; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
-  .cs__hero-shot img { width: auto; height: clamp(260px, 40vh, 420px); border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow-lg); background: var(--paper-2); }
+  .cs__hero-shot { margin: 0; justify-self: center; display: flex; flex-direction: column; gap: 0.6rem; align-items: center; }
+  .cs__hero-ad { width: auto; height: clamp(260px, 40vh, 420px); border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow-lg); background: var(--paper-2); }
+  .cs__hero-face { width: clamp(160px, 22vw, 240px); height: clamp(160px, 22vw, 240px); border-radius: 50%; object-fit: cover; border: var(--bd) solid var(--ink); box-shadow: var(--shadow-lg); background: var(--paper-2); }
+  .cs__hero-logo { max-width: 280px; max-height: 150px; background: var(--paper-2); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.4rem 1.8rem; box-sizing: border-box; object-fit: contain; }
+  .cs__hero-emoji { font-size: clamp(5rem, 12vw, 9rem); line-height: 1; }
+  .ad__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 54px; height: 54px; display: grid; place-items: center; background: rgba(20,18,16,0.78); color: #fff; border: 2px solid #fff; border-radius: 50%; font-size: 1.1rem; padding-left: 3px; }
+  .ad { position: relative; }
   .creative__cap, .ad__cap { font-size: 0.68rem; background: var(--paper-2); border: 2px solid var(--ink); padding: 0.25em 0.6em; border-radius: 999px; text-align: center; }
   @media (max-width: 760px) { .cs__head-grid { grid-template-columns: 1fr; } .cs__hero-shot { order: -1; } }
 

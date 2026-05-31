@@ -65,7 +65,7 @@ const totalSpend = showcase.totalManagedSpend
   <!-- ================= MARQUEE ================= -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      {Array.from({ length: 2 }).map(() => (
+      {Array.from({ length: 6 }).map(() => (
         <span class="marquee__group">
           <b>SaaS</b> ✦ <b>Startups</b> ✦ <b>AI products</b> ✦ <b>Vibe marketing</b> ✦
           <b>Paid acquisition</b> ✦ <b>CAC math</b> ✦ <b>UGC creative</b> ✦ <b>Conversion-first</b> ✦
@@ -139,10 +139,15 @@ const totalSpend = showcase.totalManagedSpend
             <a href={`/work/${c.id}`} class={`case card reveal accent-${c.accent} ${i % 2 ? 'case--flip' : ''}`}>
               <div class="case__media">
                 <div class={`case__visual bg-${c.accent}`}>
-                  <figure class="creative">
-                    <img src={c.image} alt={`${c.client} ad — ${c.adName}`} loading="lazy" width="270" height="480" />
-                    <figcaption class="creative__cap mono">{c.adName}</figcaption>
-                  </figure>
+                  {c.face ? (
+                    <img class="cv-face" src={c.face} alt={c.person} loading="lazy" width="180" height="180" />
+                  ) : c.logo ? (
+                    <img class="cv-logo" src={c.logo} alt={`${c.client} logo`} loading="lazy" />
+                  ) : c.emoji ? (
+                    <span class="cv-emoji" aria-hidden="true">{c.emoji}</span>
+                  ) : null}
+                  <span class="cv-word">{c.client}</span>
+                  {c.person && !c.kind ? <span class="cv-person mono">{c.person}</span> : null}
                 </div>
                 <span class="tape case__tape r-3" aria-hidden="true"></span>
               </div>
@@ -202,9 +207,14 @@ const totalSpend = showcase.totalManagedSpend
   <section id="capabilities" class="caps">
     <div class="wrap">
       <h2 class="section-h reveal"><span class="num">05</span> How I operate</h2>
+      <p class="section-lead reveal muted">A repeatable method, not vibes — research the audience, build creative that converts, buy &amp; scale against CAC, then turn what works into tooling.</p>
       <div class="caps__grid">
         {capabilities.map((c) => (
           <div class={`cap card reveal accent-${c.color}`}>
+            <div class="cap__top">
+              <span class="cap__icon" aria-hidden="true">{c.icon}</span>
+              <span class="cap__step mono">{c.step}</span>
+            </div>
             <h3 class="cap__title">{c.title}</h3>
             <p class="cap__body muted">{c.body}</p>
           </div>
@@ -222,11 +232,12 @@ const totalSpend = showcase.totalManagedSpend
       </p>
       <div class="tooling__grid">
         {tooling.map((t) => (
-          <div class="tool card reveal">
+          <a href={`/tooling/${t.slug}`} class="tool card reveal">
             <span class="tag tool__tag">{t.tag}</span>
             <h3 class="tool__name">{t.name}</h3>
             <p class="tool__desc muted">{t.desc}</p>
-          </div>
+            <span class="tool__more mono">How it works →</span>
+          </a>
         ))}
       </div>
     </div>
@@ -255,8 +266,9 @@ const totalSpend = showcase.totalManagedSpend
   .hero__name > span { display: block; }
   .hero__dot { color: var(--coral); }
   .hero__rotor-line { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3em; font-size: clamp(1.5rem, 3.6vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 2.4rem; }
-  .hero__rotor { display: inline-block; min-width: 4.5ch; color: var(--orange); }
-  .hero__squiggle { position: absolute; left: 0; bottom: -18px; width: clamp(220px, 60%, 320px); height: 22px; color: var(--orange); }
+  .hero__rotor { display: inline-block; min-width: 4.5ch; }
+  .hero__rotor span { background-image: linear-gradient(var(--acid), var(--acid)); background-repeat: no-repeat; background-size: 100% 42%; background-position: 0 82%; padding: 0 .08em; }
+  .hero__squiggle { position: absolute; left: 0; bottom: -18px; width: clamp(220px, 60%, 320px); height: 22px; color: var(--coral); }
   .hero__tag { max-width: 38ch; font-size: clamp(1.05rem, 2.2vw, 1.4rem); font-weight: 500; line-height: 1.3; }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.8rem; }
   .hero__photo-wrap { position: relative; justify-self: center; }
@@ -266,7 +278,7 @@ const totalSpend = showcase.totalManagedSpend
   .photo__tape-1 { top: -16px; left: 30px; } .photo__tape-2 { bottom: 38px; right: -22px; }
   .hbadge { position: absolute; z-index: 6; font-family: var(--font-mono); font-weight: 700; font-size: 0.74rem; padding: 0.5em 0.85em; border: var(--bd) solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-sm); white-space: nowrap; }
   .hbadge--a { top: -18px; left: -24px; background: var(--sun); }
-  .hbadge--b { bottom: 56px; right: -34px; background: var(--acid); color: var(--paper-2); }
+  .hbadge--b { bottom: 56px; right: -34px; background: var(--acid); color: var(--ink); }
   .hbadge--c { bottom: -16px; left: 10px; background: var(--paper-2); }
   .hero__star-doodle { top: -30px; right: 26px; color: var(--coral); }
   .hero__arrow { bottom: -34px; right: 60px; }
@@ -302,10 +314,12 @@ const totalSpend = showcase.totalManagedSpend
   .case--flip .case__media { order: 2; }
   .case__media { position: relative; min-height: 280px; border-right: var(--bd) solid var(--ink); }
   .case--flip .case__media { border-right: none; border-left: var(--bd) solid var(--ink); }
-  .case__visual { width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1rem; }
-  .creative { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; transform: rotate(-1.5deg); }
-  .creative img { display: block; width: auto; height: clamp(240px, 38vh, 360px); max-width: 100%; border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow); background: var(--paper-2); }
-  .creative__cap { font-size: 0.68rem; background: var(--paper-2); border: 2px solid var(--ink); padding: 0.25em 0.6em; border-radius: 999px; text-align: center; max-width: 100%; }
+  .case__visual { width: 100%; height: 100%; min-height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 1.6rem; text-align: center; }
+  .cv-face { width: clamp(120px, 15vw, 172px); height: clamp(120px, 15vw, 172px); border-radius: 50%; object-fit: cover; border: var(--bd) solid var(--ink); box-shadow: var(--shadow); background: var(--paper-2); }
+  .cv-logo { max-width: 78%; max-height: 96px; width: auto; height: auto; background: var(--paper-2); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); padding: 0.9rem 1.3rem; box-sizing: border-box; object-fit: contain; }
+  .cv-emoji { font-size: clamp(3rem, 7vw, 5rem); line-height: 1; }
+  .cv-word { font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.92; }
+  .cv-person { font-size: 0.74rem; font-weight: 700; background: var(--paper-2); color: var(--ink); border: 2px solid var(--ink); padding: 0.25em 0.7em; border-radius: 999px; }
   .case__tape { top: 14px; right: 14px; }
   .case__body { padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem; }
   .case__top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
@@ -341,7 +355,11 @@ const totalSpend = showcase.totalManagedSpend
 
   /* ---------- CAPABILITIES ---------- */
   .caps__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
-  .cap { padding: 1.5rem 1.3rem; }
+  .cap { padding: 1.5rem 1.3rem; transition: transform .14s ease, box-shadow .14s ease; }
+  .cap:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-lg); }
+  .cap__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+  .cap__icon { font-size: 1.9rem; line-height: 1; }
+  .cap__step { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 0.15em 0.6em; }
   .cap__title { font-size: 1.25rem; margin-bottom: 0.6rem; }
   .cap__body { font-size: 0.92rem; }
   @media (max-width: 900px) { .caps__grid { grid-template-columns: repeat(2, 1fr); } }
@@ -353,10 +371,12 @@ const totalSpend = showcase.totalManagedSpend
   .tooling .section-lead.muted { color: rgba(242,236,217,0.7); }
   .tooling .section-h .num { color: var(--acid); border-color: var(--paper); }
   .tooling__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
-  .tool { background: #1f1c19; color: var(--paper); border-color: var(--paper); box-shadow: 6px 6px 0 var(--acid); padding: 1.4rem; }
+  .tool { display: block; background: #1f1c19; color: var(--paper); border-color: var(--paper); box-shadow: 6px 6px 0 var(--acid); padding: 1.4rem; text-decoration: none; transition: transform .14s ease, box-shadow .14s ease; }
+  .tool:hover { transform: translate(-3px,-3px); box-shadow: 10px 10px 0 var(--acid); }
   .tool__name { font-size: 1.2rem; margin: 0.7rem 0 0.5rem; }
   .tool__desc { font-size: 0.92rem; color: rgba(242,236,217,0.72); }
   .tool__tag { background: var(--acid); color: var(--ink); }
+  .tool__more { display: inline-block; margin-top: 0.9rem; font-size: 0.78rem; font-weight: 700; color: var(--acid); }
   @media (max-width: 700px) { .tooling__grid { grid-template-columns: 1fr; } }
 
   /* ---------- INTRO + VIDEO ---------- */

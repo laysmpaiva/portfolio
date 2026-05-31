@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { profile, career, dayToDay, hardSkills, academic } from '../data/content.ts';
+import { profile, career, dayToDay, hardSkills } from '../data/content.ts';
 ---
 
 <Layout title="About — Lays Paiva" description="Career, day-to-day work and skills of growth marketer Lays Paiva.">
@@ -26,23 +26,6 @@ import { profile, career, dayToDay, hardSkills, academic } from '../data/content
           <img src={profile.photo} alt="Lays Paiva" width="360" height="360" loading="eager" onerror="this.onerror=null;this.src='/lays-placeholder.svg'" />
         </figure>
         <span class="tape t1 r-2" aria-hidden="true"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- video -->
-  <section class="ab-video">
-    <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">▶</span> A quick intro</h2>
-      <div class="ab-video__frame reveal">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${profile.youtubeId}`}
-          title="Lays Paiva — intro"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
       </div>
     </div>
   </section>
@@ -89,6 +72,7 @@ import { profile, career, dayToDay, hardSkills, academic } from '../data/content
       <div class="day__grid">
         {dayToDay.map((d) => (
           <div class="day__item card reveal">
+            <span class="day__icon" aria-hidden="true">{d.icon}</span>
             <h3 class="day__t">{d.t}</h3>
             <p class="day__d muted">{d.d}</p>
           </div>
@@ -106,23 +90,8 @@ import { profile, career, dayToDay, hardSkills, academic } from '../data/content
           <div class="sk__group reveal">
             <h3 class="sk__h mono">{g.group}</h3>
             <div class="sk__items">
-              {g.items.map((it) => <span class="tag sk__tag">{it}</span>)}
+              {g.items.map((it) => <span class="tag sk__tag"><span class="sk__i" aria-hidden="true">{it.i}</span>{it.n}</span>)}
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- academic -->
-  <section class="ab-acad">
-    <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">04</span> Academic background</h2>
-      <div class="acad__grid">
-        {academic.map((a) => (
-          <div class="acad__item card reveal">
-            <span class="acad__t">{a.title}</span>
-            <span class="acad__o mono muted">{a.org}</span>
           </div>
         ))}
       </div>
@@ -183,7 +152,9 @@ import { profile, career, dayToDay, hardSkills, academic } from '../data/content
 
   /* day to day */
   .day__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
-  .day__item { padding: 1.4rem 1.3rem; }
+  .day__item { padding: 1.4rem 1.3rem; transition: transform .14s ease, box-shadow .14s ease; }
+  .day__item:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-lg); }
+  .day__icon { display: inline-grid; place-items: center; width: 46px; height: 46px; font-size: 1.5rem; border: var(--bd) solid var(--ink); border-radius: 12px; background: var(--paper); box-shadow: var(--shadow-sm); margin-bottom: 0.9rem; }
   .day__t { font-size: 1.15rem; margin-bottom: 0.5rem; }
   .day__d { font-size: 0.92rem; }
   @media (max-width: 820px) { .day__grid { grid-template-columns: repeat(2, 1fr); } }
@@ -193,7 +164,8 @@ import { profile, career, dayToDay, hardSkills, academic } from '../data/content
   .sk__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem; }
   .sk__h { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); margin-bottom: 0.9rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--ink); }
   .sk__items { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .sk__tag { background: var(--paper-2); box-shadow: var(--shadow-sm); }
+  .sk__tag { background: var(--paper-2); box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 0.45em; }
+  .sk__i { font-size: 1.05em; line-height: 1; }
   @media (max-width: 640px) { .sk__grid { grid-template-columns: 1fr; } }
 
   /* academic */

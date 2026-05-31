@@ -6,23 +6,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Caveat:wght@600;700&display=swap');
 
 :root {
-  /* paper + ink — warm sunset cream */
-  --paper:    #FBF1E3;
-  --paper-2:  #FFF8EC;
-  --ink:      #1A1411;
-  --ink-soft: #5b4a3d;
+  /* paper + ink */
+  --paper:    #F2ECD9;
+  --paper-2:  #FBF6E7;
+  --ink:      #141210;
+  --ink-soft: #3a3631;
 
-  /* signature palette — sunset
-     NOTE: var names kept (acid/cobalt/etc) so existing class hooks still work;
-     values are now a warm sunset set with a dusk-blue counterpoint. */
-  --acid:   #FF7A2F;  /* PRIMARY — sunset orange (Lays' signature) */
-  --orange: #FF7A2F;
-  --coral:  #FF4D3D;  /* hot red-coral */
-  --cobalt: #2F4BD8;  /* dusk-blue counterpoint */
-  --sun:    #FFB22E;  /* golden hour */
-  --lilac:  #F7B58E;  /* warm peach */
-  --pink:   #FF7FA1;  /* dusk pink */
-  --sunset: linear-gradient(100deg, #FFB22E 0%, #FF7A2F 45%, #FF4D6D 100%);
+  /* signature palette (original) */
+  --acid:   #C9F227;  /* primary highlight — signature green */
+  --orange: #C9F227;  /* alias kept so older hooks resolve to the signature */
+  --coral:  #FF5A36;
+  --cobalt: #2D4DFF;
+  --sun:    #FFC93C;
+  --lilac:  #C7B4FF;
+  --pink:   #FF8FCF;
+  --sunset: linear-gradient(100deg, #C9F227 0%, #FF5A36 55%, #FF8FCF 100%);
 
   /* mechanics */
   --bd: 3px;
@@ -45,11 +43,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font-display);
   background-color: var(--paper);
-  /* soft sunset wash at the top, fading to clean cream — no dots, easy to read */
-  background-image:
-    radial-gradient(125% 70% at 50% -12%, rgba(255,122,47,0.20), transparent 55%),
-    radial-gradient(90% 55% at 100% 0%, rgba(255,77,109,0.12), transparent 55%);
-  background-attachment: fixed;
+  /* clean cream — no dotted texture (kept subtle for depth, no pattern) */
   color: var(--ink);
   line-height: 1.5;
   overflow-x: hidden;
@@ -195,7 +189,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 }
 
 /* ---------- hand-drawn draw-in accents (nevinjojo-style) ---------- */
-.scribble { position: absolute; pointer-events: none; overflow: visible; z-index: 4; color: var(--orange); }
+.scribble { position: absolute; pointer-events: none; overflow: visible; z-index: 4; color: var(--coral); }
 .draw { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
 .scribble--coral { color: var(--coral); }
 .scribble--blue  { color: var(--cobalt); }

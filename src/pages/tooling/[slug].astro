@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { skillPages, tooling } from '../../data/content.ts';
+
+export function getStaticPaths() {
+  return Object.keys(skillPages).map((slug, i) => {
+    const order = Object.keys(skillPages);
+    return {
+      params: { slug },
+      props: { s: skillPages[slug], slug, next: order[(i + 1) % order.length] },
+    };
+  });
+}
+
+const { s, slug, next } = Astro.props;
+const nextName = (tooling.find((t) => t.slug === next) || {}).name || 'Next';
+---
+
+<Layout title={`${s.name} — Lays Paiva`} description={s.intro}>
+  <Nav active="tooling" />
+
+  <article class="sk">
+    <header class={`sk__head bg-${s.accent}`}>
+      <div class="wrap">
+        <a href="/#tooling" class="sk__back mono">← Back to tooling</a>
+        <span class="tag sk__tag">{s.tag}</span>
+        <h1 class="display sk__title">{s.name}</h1>
+        <p class="sk__intro">{s.intro}</p>
+      </div>
+    </header>
+
+    <section class="wrap sk__body">
+      <!-- how it's built -->
+      <h2 class="sk__h reveal">How it's built</h2>
+      <ol class="steps">
+        {s.how.map((h: any, i: number) => (
+          <li class="step card reveal">
+            <span class="step__n mono">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="step__t">{h.t}</h3>
+              <p class="step__d muted">{h.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <!-- rules from the real skill -->
+      <h2 class="sk__h reveal">Rules &amp; guardrails <span class="sk__hsub mono">straight from the skill instructions</span></h2>
+      <ul class="rules">
+        {s.rules.map((r: string) => (
+          <li class="rule reveal">{r}</li>
+        ))}
+      </ul>
+
+      <!-- skill list (tfm plugin) -->
+      {s.skillList ? (
+        <div class="reveal">
+          <h2 class="sk__h">What's inside the plugin</h2>
+          <div class="chips">
+            {s.skillList.map((sk: string) => <span class="tag chip">/{sk}</span>)}
+          </div>
+        </div>
+      ) : null}
+
+      <!-- output example -->
+      <h2 class="sk__h reveal">Real output</h2>
+      <p class="sk__cap mono muted reveal">{s.outputCaption}</p>
+
+      {s.gallery ? (
+        <div class="sk__shots">
+          {s.gallery.map((g: any, i: number) => (
+            <figure class={`sk__shot reveal r-${(i % 3) + 1}`}>
+              <img src={g.src} alt={g.label} loading="lazy" width="280" height="498" />
+              <figcaption class="ad__cap mono">{g.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : null}
+
+      {s.outputImage ? (
+        <figure class="sk__single reveal">
+          <img src={s.outputImage} alt={s.outputCaption} loading="lazy" width="300" height="533" />
+        </figure>
+      ) : null}
+
+      {s.outputText ? (
+        <pre class="sk__report reveal">{s.outputText}</pre>
+      ) : null}
+    </section>
+
+    <a href={`/tooling/${next}`} class="sk__next">
+      <div class="wrap sk__next-inner">
+        <span class="mono">Next tool</span>
+        <span class="sk__next-name">{nextName} →</span>
+      </div>
+    </a>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .sk__head { border-bottom: var(--bd) solid var(--ink); padding-block: clamp(1.2rem,3vw,2rem) clamp(2.5rem,5vw,4rem); }
+  .sk__back { display: inline-block; font-weight: 700; text-decoration: none; margin: 0.6rem 0 1.4rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); }
+  .sk__tag { background: var(--paper-2); display: inline-block; }
+  .sk__title { font-size: clamp(2.2rem,6.5vw,4.6rem); margin: 0.7rem 0 0.6rem; text-transform: uppercase; }
+  .sk__intro { font-size: clamp(1.1rem,2.4vw,1.5rem); font-weight: 500; line-height: 1.3; max-width: 60ch; }
+
+  .sk__body { padding-block: clamp(2.5rem,6vw,4.5rem); }
+  .sk__h { font-size: clamp(1.4rem,3.5vw,2.1rem); text-transform: uppercase; margin: 2.6rem 0 1.2rem; display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+  .sk__h:first-child { margin-top: 0; }
+  .sk__hsub { font-size: 0.78rem; color: var(--coral); text-transform: none; }
+
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .step { display: flex; gap: 1rem; padding: 1.3rem 1.4rem; align-items: flex-start; }
+  .step__n { font-size: 1.1rem; font-weight: 700; color: var(--coral); }
+  .step__t { font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .step__d { font-size: 0.93rem; }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+  .rules { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .rule { position: relative; padding: 0.9rem 1.1rem 0.9rem 2.6rem; background: var(--paper-2); border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-sm); font-size: 0.96rem; font-weight: 500; }
+  .rule::before { content: "✓"; position: absolute; left: 1rem; font-weight: 700; color: var(--cobalt); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .chip { background: var(--paper-2); box-shadow: var(--shadow-sm); font-size: 0.74rem; }
+
+  .sk__cap { font-size: 0.82rem; margin-bottom: 1.2rem; }
+  .sk__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; justify-items: center; }
+  .sk__shot { margin: 0; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+  .sk__shot img { width: 100%; max-width: 260px; height: auto; aspect-ratio: 9/16; object-fit: cover; border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow); }
+  .ad__cap { font-size: 0.68rem; background: var(--paper-2); border: 2px solid var(--ink); padding: 0.25em 0.6em; border-radius: 999px; text-align: center; }
+  .sk__single { margin: 0; }
+  .sk__single img { width: auto; height: clamp(320px,50vh,520px); border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow-lg); }
+  @media (max-width: 720px) { .sk__shots { grid-template-columns: 1fr; } }
+
+  .sk__report { font-family: var(--font-mono); font-size: 0.86rem; line-height: 1.55; white-space: pre-wrap; background: var(--ink); color: var(--paper); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; max-width: 720px; }
+
+  .sk__next { display: block; text-decoration: none; color: var(--ink); border-top: var(--bd) solid var(--ink); background: var(--paper-2); }
+  .sk__next-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 2rem; gap: 1rem; }
+  .sk__next-name { font-size: clamp(1.3rem,3.5vw,2.2rem); font-weight: 700; text-transform: uppercase; }
+  .sk__next:hover .sk__next-name { text-decoration: underline 3px; text-underline-offset: 5px; }
+</style>
+
+<script>
+  import { initMotion } from '../../scripts/motion.ts';
+  initMotion();
+</script>
