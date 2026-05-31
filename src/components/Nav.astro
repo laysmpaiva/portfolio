@@ -1,0 +1,31 @@
+---
+const { active = 'home' } = Astro.props;
+---
+<header class="nav">
+  <a href="/" class="nav__logo">
+    <span class="nav__mark">L</span>
+    <span>Lays Paiva</span>
+  </a>
+  <nav class="nav__links">
+    <a href="/#work" class:list={[{ on: active === 'work' }]}>Work</a>
+    <a href="/#tooling">AI&nbsp;Tooling</a>
+    <a href="/about" class:list={[{ on: active === 'about' }]}>About</a>
+    <a href="/#contact" class="btn btn--coral nav__cta">Hire me</a>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.7rem clamp(1rem, 4vw, 2.5rem);
+    background: var(--paper); border-bottom: var(--bd) solid var(--ink);
+  }
+  .nav__logo { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; text-decoration: none; font-size: 1.05rem; }
+  .nav__mark { display: grid; place-items: center; width: 30px; height: 30px; background: var(--acid); border: 2.5px solid var(--ink); border-radius: 6px; font-weight: 700; box-shadow: var(--shadow-sm); }
+  .nav__links { display: flex; align-items: center; gap: clamp(0.8rem, 2.5vw, 1.8rem); font-weight: 600; }
+  .nav__links a { text-decoration: none; }
+  .nav__links > a:not(.btn):hover, .nav__links > a.on { text-decoration: underline 2px; text-underline-offset: 4px; }
+  .nav__cta { padding: 0.5em 1em; font-size: 0.8rem; }
+  @media (max-width: 620px) { .nav__links a:not(.nav__cta) { display: none; } }
+</style>

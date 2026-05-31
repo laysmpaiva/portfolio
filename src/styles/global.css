@@ -181,6 +181,25 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
 
+/* ---------- shared section primitives (used across pages) ---------- */
+.section-h {
+  font-size: clamp(1.8rem, 5vw, 3.2rem); text-transform: uppercase;
+  display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 1.2rem; line-height: 0.95;
+}
+.section-h .num { font-family: var(--font-mono); font-size: 0.9rem; color: var(--coral); border: 2px solid var(--ink); border-radius: 999px; padding: 0.2em 0.7em; }
+.section-lead { max-width: 58ch; font-size: 1.05rem; margin-bottom: 2.5rem; }
+
+.accent-acid   { border-top: 8px solid var(--acid); }
+.accent-coral  { border-top: 8px solid var(--coral); }
+.accent-cobalt { border-top: 8px solid var(--cobalt); }
+.accent-sun    { border-top: 8px solid var(--sun); }
+.accent-lilac  { border-top: 8px solid var(--lilac); }
+.bg-acid { background-color: var(--acid); }
+.bg-coral { background-color: var(--coral); color: var(--paper-2); }
+.bg-cobalt { background-color: var(--cobalt); color: var(--paper-2); }
+.bg-sun { background-color: var(--sun); }
+.bg-lilac { background-color: var(--lilac); }
+
 /* ---------- utilities ---------- */
 .center { text-align: center; }
 .muted { color: var(--ink-soft); }
