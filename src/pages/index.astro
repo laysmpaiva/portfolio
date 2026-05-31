@@ -31,7 +31,10 @@ const totalSpend = showcase.totalManagedSpend
         </h1>
         <p class="hero__rotor-line reveal">
           Growth for
-          <span class="hero__rotor" data-words={JSON.stringify(profile.headlineWords)}><span class="mark">SaaS</span></span>
+          <span class="hero__rotor" data-words={JSON.stringify(profile.headlineWords)}><span>SaaS</span></span>
+          <svg class="scribble hero__squiggle" viewBox="0 0 320 22" width="320" height="22" aria-hidden="true">
+            <path class="draw" d="M4 13 q 36 -12 72 0 t 72 0 t 72 0 t 72 -2" stroke-width="6" />
+          </svg>
         </p>
         <p class="hero__tag reveal">{profile.tagline}</p>
         <div class="hero__actions reveal">
@@ -40,14 +43,21 @@ const totalSpend = showcase.totalManagedSpend
         </div>
       </div>
       <div class="hero__photo-wrap reveal">
-        <figure class="photo r-2">
+        <figure class="photo">
           <img src={profile.photo} alt="Lays Paiva" width="520" height="560" loading="eager" onerror="this.onerror=null;this.src='/lays-placeholder.svg'" />
-          <figcaption class="hand">Lays — growth, but make it convert ✶</figcaption>
         </figure>
         <span class="tape photo__tape-1 r-1" aria-hidden="true"></span>
-        <span class="tape photo__tape-2 r-4" aria-hidden="true"></span>
-        <div class="sticker hero__sticker r-4" aria-hidden="true"><span>685K<br>subs<br>scaled ✷</span></div>
-        <span class="hero__star" aria-hidden="true">✷</span>
+        <!-- floating sticker badges -->
+        <span class="hbadge hbadge--a floaty" style="--rot:-7deg" aria-hidden="true">685K subs ✷</span>
+        <span class="hbadge hbadge--b floaty floaty--b" style="--rot:6deg" aria-hidden="true">◉ open to work</span>
+        <span class="hbadge hbadge--c floaty floaty--c" style="--rot:-4deg" aria-hidden="true">$1.35M managed</span>
+        <svg class="scribble hero__star-doodle floaty" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+          <path class="draw" d="M20 3 L24 16 L37 20 L24 24 L20 37 L16 24 L3 20 L16 16 Z" stroke-width="4" />
+        </svg>
+        <svg class="scribble hero__arrow scribble--blue" viewBox="0 0 80 60" width="80" height="60" aria-hidden="true">
+          <path class="draw" d="M6 8 C 30 6, 50 22, 58 48" stroke-width="5" />
+          <path class="draw" d="M58 48 L48 40 M58 48 L60 35" stroke-width="5" />
+        </svg>
       </div>
     </div>
   </section>
@@ -244,8 +254,9 @@ const totalSpend = showcase.totalManagedSpend
   .hero__name { margin: 0.4rem 0 0.8rem; font-size: clamp(3.4rem, 10vw, 8rem); }
   .hero__name > span { display: block; }
   .hero__dot { color: var(--coral); }
-  .hero__rotor-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3em; font-size: clamp(1.5rem, 3.6vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 1.1rem; }
-  .hero__rotor { display: inline-block; min-width: 4.5ch; }
+  .hero__rotor-line { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3em; font-size: clamp(1.5rem, 3.6vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 2.4rem; }
+  .hero__rotor { display: inline-block; min-width: 4.5ch; color: var(--orange); }
+  .hero__squiggle { position: absolute; left: 0; bottom: -18px; width: clamp(220px, 60%, 320px); height: 22px; color: var(--orange); }
   .hero__tag { max-width: 38ch; font-size: clamp(1.05rem, 2.2vw, 1.4rem); font-weight: 500; line-height: 1.3; }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.8rem; }
   .hero__photo-wrap { position: relative; justify-self: center; }
@@ -253,13 +264,18 @@ const totalSpend = showcase.totalManagedSpend
   .photo img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 2px solid var(--ink); background: repeating-linear-gradient(45deg, var(--lilac), var(--lilac) 12px, var(--paper-2) 12px, var(--paper-2) 24px); }
   .photo figcaption { font-size: 1.35rem; text-align: center; padding: 0.35rem 0 0.6rem; }
   .photo__tape-1 { top: -16px; left: 30px; } .photo__tape-2 { bottom: 38px; right: -22px; }
-  .hero__sticker { position: absolute; bottom: -22px; left: -28px; width: 110px; height: 110px; font-size: 0.78rem; line-height: 1.15; background: var(--coral); color: var(--paper-2); z-index: 6; }
-  .hero__star { position: absolute; top: -22px; right: 8px; font-size: 2.2rem; color: var(--sun); z-index: 6; }
+  .hbadge { position: absolute; z-index: 6; font-family: var(--font-mono); font-weight: 700; font-size: 0.74rem; padding: 0.5em 0.85em; border: var(--bd) solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-sm); white-space: nowrap; }
+  .hbadge--a { top: -18px; left: -24px; background: var(--sun); }
+  .hbadge--b { bottom: 56px; right: -34px; background: var(--acid); color: var(--paper-2); }
+  .hbadge--c { bottom: -16px; left: 10px; background: var(--paper-2); }
+  .hero__star-doodle { top: -30px; right: 26px; color: var(--coral); }
+  .hero__arrow { bottom: -34px; right: 60px; }
   @media (max-width: 820px) {
     .hero__inner { grid-template-columns: 1fr; }
     .hero__photo-wrap { order: -1; margin-bottom: 0.5rem; }
     .photo { width: min(72vw, 280px); }
-    .hero__sticker { width: 86px; height: 86px; font-size: 0.62rem; bottom: -16px; left: -10px; }
+    .hbadge--c, .hero__arrow { display: none; }
+    .hbadge--a { left: -8px; } .hbadge--b { right: -8px; }
   }
 
   /* ---------- MARQUEE ---------- */
@@ -286,7 +302,7 @@ const totalSpend = showcase.totalManagedSpend
   .case--flip .case__media { order: 2; }
   .case__media { position: relative; min-height: 280px; border-right: var(--bd) solid var(--ink); }
   .case--flip .case__media { border-right: none; border-left: var(--bd) solid var(--ink); }
-  .case__visual { width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1rem; background-image: radial-gradient(rgba(20,18,16,0.16) 1.4px, transparent 1.4px); background-size: 16px 16px; }
+  .case__visual { width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1rem; }
   .creative { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; transform: rotate(-1.5deg); }
   .creative img { display: block; width: auto; height: clamp(240px, 38vh, 360px); max-width: 100%; border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow); background: var(--paper-2); }
   .creative__cap { font-size: 0.68rem; background: var(--paper-2); border: 2px solid var(--ink); padding: 0.25em 0.6em; border-radius: 999px; text-align: center; max-width: 100%; }

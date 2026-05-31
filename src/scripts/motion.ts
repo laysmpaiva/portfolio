@@ -69,7 +69,7 @@ function runMotion() {
     let words: string[] = [];
     try { words = JSON.parse(rotor.dataset.words || '[]'); } catch {}
     if (words.length > 1) {
-      const inner = rotor.querySelector('.mark') as HTMLElement;
+      const inner = rotor.querySelector('span') as HTMLElement;
       let i = 0;
       const cycle = () => {
         i = (i + 1) % words.length;
@@ -98,14 +98,49 @@ function runMotion() {
     });
   });
 
-  // ---- case visuals: gentle parallax of the big label ----
+  // ---- hand-drawn accents draw in on scroll ----
+  gsap.utils.toArray<SVGGeometryElement>('.draw').forEach((p) => {
+    let len = 400;
+    try { len = p.getTotalLength() || 400; } catch {}
+    gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+    ScrollTrigger.create({
+      trigger: p.closest('section') || p,
+      start: 'top 75%',
+      once: true,
+      onEnter: () => gsap.to(p, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }),
+    });
+  });
+
+  // ---- magnetic buttons ----
+  gsap.utils.toArray<HTMLElement>('.btn').forEach((b) => {
+    b.addEventListener('pointermove', (e) => {
+      const r = b.getBoundingClientRect();
+      gsap.to(b, { x: (e.clientX - (r.left + r.width / 2)) * 0.28, y: (e.clientY - (r.top + r.height / 2)) * 0.4, duration: 0.3, ease: 'power2.out' });
+    });
+    b.addEventListener('pointerleave', () => gsap.to(b, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' }));
+  });
+
+  // ---- hero photo mouse-tilt ----
+  const wrap = document.querySelector<HTMLElement>('.hero__photo-wrap');
+  const photo = wrap?.querySelector<HTMLElement>('.photo');
+  if (wrap && photo) {
+    wrap.addEventListener('pointermove', (e) => {
+      const r = wrap.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      gsap.to(photo, { rotateY: px * 12, rotateX: -py * 12, rotation: -1.5, transformPerspective: 700, duration: 0.4, ease: 'power2.out' });
+    });
+    wrap.addEventListener('pointerleave', () => gsap.to(photo, { rotateX: 0, rotateY: 0, rotation: -1.5, duration: 0.7, ease: 'power2.out' }));
+  }
+
+  // ---- case visuals: gentle parallax of the pinned creative ----
   gsap.utils.toArray<HTMLElement>('.case').forEach((card) => {
-    const label = card.querySelector('.case__visual-big');
+    const label = card.querySelector('.creative');
     if (!label) return;
     gsap.fromTo(
       label,
-      { yPercent: 8 },
-      { yPercent: -8, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true } }
+      { yPercent: 6 },
+      { yPercent: -6, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true } }
     );
   });
 }
