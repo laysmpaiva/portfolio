@@ -226,9 +226,9 @@ const mmColor = (g: string) => (s.mindmap.groups.find((gr: any) => gr.key === g)
   .mm { margin-bottom: 1.5rem; }
   .mm__stage { position: relative; height: clamp(420px, 52vw, 580px); }
   .mm__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .mm__line { stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: 0.25; stroke-dasharray: 200; stroke-dashoffset: 200; }
-  .mm-on .mm__line { animation: mmdraw 0.6s ease both; animation-delay: var(--d, 0s); }
-  @keyframes mmdraw { to { stroke-dashoffset: 0; } }
+  .mm__line { stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: 0; }
+  .mm-on .mm__line { animation: mmlinein 0.6s ease both; animation-delay: var(--d, 0s); }
+  @keyframes mmlinein { from { opacity: 0; } to { opacity: 0.25; } }
   .mm__node {
     position: absolute; transform: translate(-50%,-50%) scale(0); opacity: 0; z-index: 1;
     background: var(--paper-2); border: 2.5px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow-sm);
