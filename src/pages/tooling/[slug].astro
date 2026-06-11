@@ -2,7 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { skillPages, tooling } from '../../data/content.ts';
+import { tooling } from '../../data/content.ts';
+import { skillPages } from '../../data/skillPages.ts';
 
 export function getStaticPaths() {
   return Object.keys(skillPages).map((slug, i) => {
@@ -16,9 +17,18 @@ export function getStaticPaths() {
 
 const { s, slug, next } = Astro.props;
 const nextName = (tooling.find((t) => t.slug === next) || {}).name || 'Next';
+
+// mind-map node positions: ellipse around the center, groups stay clustered
+const mmNodes = s.mindmap
+  ? s.mindmap.nodes.map((n: any, i: number, arr: any[]) => {
+      const angle = (-90 + (360 / arr.length) * i) * (Math.PI / 180);
+      return { ...n, x: 50 + 41 * Math.cos(angle), y: 50 + 38 * Math.sin(angle) };
+    })
+  : [];
+const mmColor = (g: string) => (s.mindmap.groups.find((gr: any) => gr.key === g) || {}).color || 'cobalt';
 ---
 
-<Layout title={`${s.name} — Lays Paiva`} description={s.intro}>
+<Layout title={`${s.name} · Lays Paiva`} description={s.intro}>
   <Nav active="tooling" />
 
   <article class="sk">
@@ -27,24 +37,151 @@ const nextName = (tooling.find((t) => t.slug === next) || {}).name || 'Next';
         <a href="/#tooling" class="sk__back mono">← Back to tooling</a>
         <span class="tag sk__tag">{s.tag}</span>
         <h1 class="display sk__title">{s.name}</h1>
+        <p class="sk__headline">{s.headline}</p>
         <p class="sk__intro">{s.intro}</p>
+        {s.stat ? (
+          <div class="sk__stat">
+            <span class="sk__stat-num">{s.stat.num}</span>
+            <span class="sk__stat-label">{s.stat.label}</span>
+          </div>
+        ) : null}
       </div>
     </header>
 
     <section class="wrap sk__body">
-      <!-- how it's built -->
-      <h2 class="sk__h reveal">How it's built</h2>
-      <ol class="steps">
-        {s.how.map((h: any, i: number) => (
-          <li class="step card reveal">
-            <span class="step__n mono">{String(i + 1).padStart(2, '0')}</span>
+
+      {s.mindmap ? (
+        <div class="mm reveal" data-mm>
+          <h2 class="sk__h">{s.mindmap.title}</h2>
+          <div class="mm__stage">
+            <svg class="mm__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              {mmNodes.map((n: any, i: number) => (
+                <line class="mm__line" x1="50" y1="50" x2={n.x} y2={n.y} style={`--d:${0.15 + i * 0.07}s`} />
+              ))}
+            </svg>
+            {mmNodes.map((n: any, i: number) => (
+              <div class={`mm__node mm--${mmColor(n.g)}`} style={`left:${n.x}%; top:${n.y}%; --d:${0.2 + i * 0.07}s`}>
+                <span class="mm__icon" aria-hidden="true">{n.icon}</span>{n.t}
+              </div>
+            ))}
+            <div class="mm__center" style="--d:.05s">{s.mindmap.center}</div>
+          </div>
+          <div class="mm__legend">
+            {s.mindmap.groups.map((g: any) => (
+              <span class="mm__leg mono"><i class={`bg-${g.color}`}></i>{g.label}</span>
+            ))}
+          </div>
+          <p class="mm__cap mono muted">{s.mindmap.caption}</p>
+          <ul class="mm__list">
+            {s.mindmap.nodes.map((n: any) => (
+              <li class={`mm__chip mm--${mmColor(n.g)}`}>{n.icon} {n.t}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {s.deltas ? (
+        <>
+          <h2 class="sk__h reveal">One command per chore</h2>
+          <div class="deltas">
+            {s.deltas.map((d: any) => (
+              <div class="delta card reveal--pop">
+                <span class="delta__icon" aria-hidden="true">{d.icon}</span>
+                <h3 class="delta__t">{d.t}</h3>
+                <p class="delta__d muted">{d.d}</p>
+                <p class="delta__time mono"><s>{d.from}</s> <span class="delta__arrow">→</span> <b>{d.to}</b></p>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {s.repo ? (
+        <div class="repo reveal">
+          <h2 class="sk__h">The repo is the product</h2>
+          <div class="repo__grid">
             <div>
-              <h3 class="step__t">{h.t}</h3>
-              <p class="step__d muted">{h.d}</p>
+              <pre class="prompt"><span class="prompt__label">Install, one line</span>{s.repo.install}</pre>
+              <ul class="repo__points">
+                {s.repo.points.map((p: string) => <li>{p}</li>)}
+              </ul>
             </div>
-          </li>
+            <figure class="shotfig">
+              <img class="shot" src={s.repo.img} alt={s.repo.cap} loading="lazy" data-zoom />
+              <figcaption class="shot__cap mono muted">{s.repo.cap}</figcaption>
+            </figure>
+          </div>
+        </div>
+      ) : null}
+
+      {s.templates ? (
+        <>
+          <h2 class="sk__h reveal">The 12 formats</h2>
+          <div class="tpls">
+            {s.templates.map((t: any) => (
+              <div class="tpl card reveal--pop">
+                <h3 class="tpl__n mono">{t.n}</h3>
+                <p class="tpl__d muted">{t.d}</p>
+              </div>
+            ))}
+          </div>
+          {s.templatesImg ? (
+            <figure class="shotfig shotfig--wide reveal">
+              <img class="shot" src={s.templatesImg} alt={s.templatesCap} loading="lazy" data-zoom />
+              <figcaption class="shot__cap mono muted">{s.templatesCap}</figcaption>
+            </figure>
+          ) : null}
+        </>
+      ) : null}
+
+      <!-- walkthrough -->
+      <h2 class="sk__h reveal">{s.templates ? 'Inside one run, start to shipped' : 'How a run actually goes'}</h2>
+      <div class="walk">
+        {s.walkthrough.map((w: any, i: number) => (
+          <div class={`wstep reveal ${w.img ? '' : 'wstep--solo'}`}>
+            <div class="wstep__text">
+              <div class="wstep__head">
+                <span class="wstep__n mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="wstep__icon" aria-hidden="true">{w.icon}</span>
+                <h3 class="wstep__t">{w.h}</h3>
+              </div>
+              <p class="wstep__d">{w.d}</p>
+              {w.prompt ? (
+                <pre class="prompt"><span class="prompt__label">{w.promptLabel || 'Typed live, in chat'}</span>{w.prompt}</pre>
+              ) : null}
+            </div>
+            {w.img ? (
+              <figure class="shotfig">
+                <img class="shot" src={w.img} alt={w.imgCap || w.h} loading="lazy" data-zoom />
+                <figcaption class="shot__cap mono muted">{w.imgCap}</figcaption>
+              </figure>
+            ) : null}
+          </div>
         ))}
-      </ol>
+      </div>
+
+      {s.build ? (
+        <div class="build">
+          <h2 class="sk__h reveal">{s.build.title}</h2>
+          <div class="build__grid">
+            <div class="build__items">
+              {s.build.items.map((it: any) => (
+                <div class="bitem card reveal--pop">
+                  <span class="bitem__icon" aria-hidden="true">{it.icon}</span>
+                  <div>
+                    <h3 class="bitem__t">{it.t}</h3>
+                    <p class="bitem__d muted">{it.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div class="reveal">
+              <pre class="prompt prompt--tall"><span class="prompt__label">{s.build.promptLabel}</span>{s.build.prompt}</pre>
+              <p class="build__note">{s.build.note}</p>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <!-- rules from the real skill -->
       <h2 class="sk__h reveal">Rules &amp; guardrails <span class="sk__hsub mono">straight from the skill instructions</span></h2>
@@ -53,41 +190,6 @@ const nextName = (tooling.find((t) => t.slug === next) || {}).name || 'Next';
           <li class="rule reveal">{r}</li>
         ))}
       </ul>
-
-      <!-- skill list (tfm plugin) -->
-      {s.skillList ? (
-        <div class="reveal">
-          <h2 class="sk__h">What's inside the plugin</h2>
-          <div class="chips">
-            {s.skillList.map((sk: string) => <span class="tag chip">/{sk}</span>)}
-          </div>
-        </div>
-      ) : null}
-
-      <!-- output example -->
-      <h2 class="sk__h reveal">Real output</h2>
-      <p class="sk__cap mono muted reveal">{s.outputCaption}</p>
-
-      {s.gallery ? (
-        <div class="sk__shots">
-          {s.gallery.map((g: any, i: number) => (
-            <figure class={`sk__shot reveal r-${(i % 3) + 1}`}>
-              <img src={g.src} alt={g.label} loading="lazy" width="280" height="498" />
-              <figcaption class="ad__cap mono">{g.label}</figcaption>
-            </figure>
-          ))}
-        </div>
-      ) : null}
-
-      {s.outputImage ? (
-        <figure class="sk__single reveal">
-          <img src={s.outputImage} alt={s.outputCaption} loading="lazy" width="300" height="533" />
-        </figure>
-      ) : null}
-
-      {s.outputText ? (
-        <pre class="sk__report reveal">{s.outputText}</pre>
-      ) : null}
     </section>
 
     <a href={`/tooling/${next}`} class="sk__next">
@@ -98,53 +200,176 @@ const nextName = (tooling.find((t) => t.slug === next) || {}).name || 'Next';
     </a>
   </article>
 
+  <div id="lightbox" aria-hidden="true"><span class="lb__hint mono">Click or press Esc to close</span><img src="" alt="" /></div>
+
   <Footer />
 </Layout>
 
 <style>
   .sk__head { border-bottom: var(--bd) solid var(--ink); padding-block: clamp(1.2rem,3vw,2rem) clamp(2.5rem,5vw,4rem); }
-  .sk__back { display: inline-block; font-weight: 700; text-decoration: none; margin: 0.6rem 0 1.4rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); }
-  .sk__tag { background: var(--paper-2); display: inline-block; }
+  .sk__back { display: block; width: fit-content; font-weight: 700; text-decoration: none; margin: 0.6rem 0 0.8rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
+  .sk__tag { display: block; width: fit-content; margin: 0 0 1.4rem; font-size: 1rem; font-weight: 700; padding: 0.4em 0.8em; border: 2px solid var(--ink); background: var(--pink); color: var(--ink); box-shadow: var(--shadow-sm); }
   .sk__title { font-size: clamp(2.2rem,6.5vw,4.6rem); margin: 0.7rem 0 0.6rem; text-transform: uppercase; }
-  .sk__intro { font-size: clamp(1.1rem,2.4vw,1.5rem); font-weight: 500; line-height: 1.3; max-width: 60ch; }
+  .sk__headline { font-size: clamp(1.2rem,2.6vw,1.7rem); font-weight: 700; line-height: 1.25; max-width: 40ch; }
+  .sk__intro { font-size: 1.02rem; font-weight: 500; line-height: 1.5; max-width: 68ch; margin-top: 0.9rem; }
+  .sk__stat { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  .sk__stat-num { font-size: clamp(2.2rem, 5.4vw, 3.8rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--ink); background: var(--paper-2); padding: 0.14em 0.32em; border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+  .sk__stat-label { font-size: 0.95rem; font-weight: 600; max-width: 28ch; line-height: 1.35; }
 
   .sk__body { padding-block: clamp(2.5rem,6vw,4.5rem); }
-  .sk__h { font-size: clamp(1.4rem,3.5vw,2.1rem); text-transform: uppercase; margin: 2.6rem 0 1.2rem; display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
-  .sk__h:first-child { margin-top: 0; }
+  .sk__h { font-size: clamp(1.4rem,3.5vw,2.1rem); text-transform: uppercase; margin: 2.8rem 0 1.2rem; display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+  .sk__h:first-child, .mm .sk__h { margin-top: 0; }
+  .repo { margin-top: 3.2rem; }
   .sk__hsub { font-size: 0.78rem; color: var(--coral); text-transform: none; }
 
-  .steps { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-  .step { display: flex; gap: 1rem; padding: 1.3rem 1.4rem; align-items: flex-start; }
-  .step__n { font-size: 1.1rem; font-weight: 700; color: var(--coral); }
-  .step__t { font-size: 1.15rem; margin-bottom: 0.4rem; }
-  .step__d { font-size: 0.93rem; }
-  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+  /* ---------- mind map ---------- */
+  .mm { margin-bottom: 1.5rem; }
+  .mm__stage { position: relative; height: clamp(420px, 52vw, 580px); }
+  .mm__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .mm__line { stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: 0.25; stroke-dasharray: 200; stroke-dashoffset: 200; }
+  .mm-on .mm__line { animation: mmdraw 0.6s ease both; animation-delay: var(--d, 0s); }
+  @keyframes mmdraw { to { stroke-dashoffset: 0; } }
+  .mm__node {
+    position: absolute; transform: translate(-50%,-50%) scale(0); opacity: 0; z-index: 1;
+    background: var(--paper-2); border: 2.5px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow-sm);
+    padding: 0.5rem 0.65rem; font-size: clamp(0.62rem, 1.05vw, 0.8rem); font-weight: 600; line-height: 1.25;
+    text-align: center; max-width: clamp(120px, 14vw, 170px);
+    transition: scale 0.2s var(--ease-spring), box-shadow 0.2s ease;
+  }
+  .mm-on .mm__node { animation: mmpop 0.45s var(--ease-spring) both; animation-delay: var(--d, 0s); }
+  @keyframes mmpop { from { transform: translate(-50%,-50%) scale(0); opacity: 0; } to { transform: translate(-50%,-50%) scale(1); opacity: 1; } }
+  .mm__node:hover { scale: 1.12; z-index: 3; box-shadow: var(--shadow); }
+  .mm__icon { display: block; font-size: 1.15em; margin-bottom: 0.15rem; }
+  .mm--cobalt { border-color: var(--cobalt); }
+  .mm--lilac  { border-color: #9d7bff; }
+  .mm--coral  { border-color: var(--coral); }
+  .mm--sun    { border-color: #e0a400; }
+  .mm--acid   { border-color: #7a9a00; border-style: dashed; }
+  .mm__center {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(0); opacity: 0; z-index: 2;
+    background: var(--ink); color: var(--acid); border-radius: 12px; box-shadow: var(--shadow);
+    padding: 0.9rem 1.1rem; font-weight: 700; font-size: clamp(0.8rem, 1.4vw, 1.05rem); text-align: center; max-width: 200px;
+  }
+  .mm-on .mm__center { animation: mmpop 0.5s var(--ease-spring) both; animation-delay: var(--d, 0s); }
+  .mm__legend { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.8rem; }
+  .mm__leg { display: inline-flex; align-items: center; gap: 0.45em; font-size: 0.74rem; font-weight: 700; }
+  .mm__leg i { width: 11px; height: 11px; border-radius: 3px; border: 2px solid var(--ink); display: inline-block; }
+  .mm__cap { font-size: 0.8rem; margin-top: 0.7rem; }
+  .mm__list { display: none; }
+  @media (max-width: 720px) {
+    .mm__stage, .mm__legend { display: none; }
+    .mm__list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem; }
+    .mm__chip { background: var(--paper-2); border: 2.5px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow-sm); padding: 0.55rem 0.8rem; font-size: 0.85rem; font-weight: 600; }
+  }
+
+  /* ---------- deltas (plugin inventory) ---------- */
+  .deltas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.1rem; margin-bottom: 1rem; }
+  .delta { padding: 1.2rem 1.1rem; display: flex; flex-direction: column; }
+  .delta__icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+  .delta__t { font-size: 1rem; margin-bottom: 0.4rem; }
+  .delta__d { font-size: 0.8rem; line-height: 1.4; }
+  .delta__time { margin-top: auto; padding-top: 0.8rem; font-size: 0.85rem; font-weight: 700; }
+  .delta__time s { color: var(--coral); }
+  .delta__time b { background: var(--acid); padding: 0.1em 0.4em; border-radius: 4px; border: 2px solid var(--ink); }
+  .delta__arrow { color: var(--ink-soft); }
+  @media (max-width: 1000px) { .deltas { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .deltas { grid-template-columns: 1fr; } }
+
+  /* ---------- repo ---------- */
+  .repo__grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 2rem; align-items: start; }
+  .repo__points { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.2rem; }
+  .repo__points li { position: relative; padding-left: 1.6rem; font-size: 0.96rem; line-height: 1.5; }
+  .repo__points li::before { content: "→"; position: absolute; left: 0; color: var(--coral); font-weight: 700; }
+  @media (max-width: 820px) { .repo__grid { grid-template-columns: 1fr; } }
+
+  /* ---------- templates grid ---------- */
+  .tpls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .tpl { padding: 1rem 1.05rem; }
+  .tpl__n { font-size: 0.86rem; font-weight: 700; color: var(--cobalt); margin-bottom: 0.35rem; }
+  .tpl__d { font-size: 0.82rem; line-height: 1.35; }
+  @media (max-width: 900px) { .tpls { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px) { .tpls { grid-template-columns: 1fr; } }
+
+  /* ---------- walkthrough ---------- */
+  .walk { display: flex; flex-direction: column; gap: clamp(1.8rem, 4vw, 2.8rem); }
+  .wstep { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.4rem, 3vw, 2.4rem); align-items: center; }
+  .wstep--solo { grid-template-columns: 1fr; max-width: 72ch; }
+  .wstep:nth-child(even):not(.wstep--solo) .wstep__text { order: 2; }
+  .wstep__head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+  .wstep__n { font-size: 0.78rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 0.2em 0.65em; background: var(--acid); }
+  .wstep__icon { font-size: 1.4rem; }
+  .wstep__t { font-size: clamp(1.1rem, 2.2vw, 1.45rem); }
+  .wstep__d { font-size: 0.98rem; line-height: 1.55; color: var(--ink-soft); }
+  @media (max-width: 760px) { .wstep { grid-template-columns: 1fr; } .wstep:nth-child(even):not(.wstep--solo) .wstep__text { order: 0; } }
+
+  /* ---------- screenshots + prompt blocks ---------- */
+  .shotfig { margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .shot { width: 100%; height: auto; border: var(--bd) solid var(--ink); border-radius: 6px; box-shadow: var(--shadow); background: var(--ink); cursor: zoom-in; transition: transform 0.2s var(--ease-out), box-shadow 0.25s ease; display: block; }
+  .shot:hover { transform: scale(1.015) translateY(-3px); box-shadow: var(--shadow), 0 18px 38px rgba(20,18,16,0.2); }
+  .shot__cap { font-size: 0.74rem; }
+  .shotfig--wide { max-width: 880px; margin-top: 1.4rem; }
+  .prompt { font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.6; white-space: pre-wrap; background: var(--ink); color: #d9e3c2; border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1rem 1.2rem; margin-top: 1rem; max-width: 64ch; }
+  .prompt__label { display: block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acid); margin-bottom: 0.6rem; }
+
+  /* ---------- build-your-own ---------- */
+  .build__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 2rem; align-items: start; }
+  .build__items { display: flex; flex-direction: column; gap: 0.9rem; }
+  .bitem { display: flex; gap: 0.9rem; padding: 1.1rem 1.2rem; align-items: flex-start; }
+  .bitem__icon { font-size: 1.4rem; padding-top: 0.1rem; }
+  .bitem__t { font-size: 1.02rem; margin-bottom: 0.3rem; }
+  .bitem__d { font-size: 0.88rem; line-height: 1.45; }
+  .prompt--tall { margin-top: 0; max-width: none; }
+  .build__note { margin-top: 1rem; font-size: 0.92rem; line-height: 1.5; background: var(--paper-2); border: 2px dashed var(--ink); border-radius: var(--radius); padding: 0.9rem 1.1rem; }
+  @media (max-width: 820px) { .build__grid { grid-template-columns: 1fr; } }
 
   .rules { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
   .rule { position: relative; padding: 0.9rem 1.1rem 0.9rem 2.6rem; background: var(--paper-2); border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-sm); font-size: 0.96rem; font-weight: 500; }
   .rule::before { content: "✓"; position: absolute; left: 1rem; font-weight: 700; color: var(--cobalt); }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .chip { background: var(--paper-2); box-shadow: var(--shadow-sm); font-size: 0.74rem; }
-
-  .sk__cap { font-size: 0.82rem; margin-bottom: 1.2rem; }
-  .sk__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; justify-items: center; }
-  .sk__shot { margin: 0; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
-  .sk__shot img { width: 100%; max-width: 260px; height: auto; aspect-ratio: 9/16; object-fit: cover; border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow); }
-  .ad__cap { font-size: 0.68rem; background: var(--paper-2); border: 2px solid var(--ink); padding: 0.25em 0.6em; border-radius: 999px; text-align: center; }
-  .sk__single { margin: 0; }
-  .sk__single img { width: auto; height: clamp(320px,50vh,520px); border: var(--bd) solid var(--ink); border-radius: 3px; box-shadow: var(--shadow-lg); }
-  @media (max-width: 720px) { .sk__shots { grid-template-columns: 1fr; } }
-
-  .sk__report { font-family: var(--font-mono); font-size: 0.86rem; line-height: 1.55; white-space: pre-wrap; background: var(--ink); color: var(--paper); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; max-width: 720px; }
+  /* ---------- lightbox ---------- */
+  #lightbox { position: fixed; inset: 0; z-index: 60; background: rgba(20,18,16,0.92); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.22s ease, visibility 0.22s; cursor: zoom-out; }
+  #lightbox.open { opacity: 1; visibility: visible; }
+  #lightbox img { max-width: 94vw; max-height: 92vh; border: var(--bd) solid var(--paper-2); border-radius: 8px; transform: scale(0.96); transition: transform 0.22s ease; }
+  #lightbox.open img { transform: scale(1); }
+  .lb__hint { position: fixed; top: 20px; right: 26px; font-size: 0.72rem; color: var(--paper-2); font-weight: 700; }
 
   .sk__next { display: block; text-decoration: none; color: var(--ink); border-top: var(--bd) solid var(--ink); background: var(--paper-2); }
   .sk__next-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 2rem; gap: 1rem; }
   .sk__next-name { font-size: clamp(1.3rem,3.5vw,2.2rem); font-weight: 700; text-transform: uppercase; }
   .sk__next:hover .sk__next-name { text-decoration: underline 3px; text-underline-offset: 5px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mm-on .mm__node, .mm-on .mm__center { animation-duration: 0.01s; }
+    .mm-on .mm__line { animation-duration: 0.01s; }
+  }
 </style>
 
 <script>
   import { initMotion } from '../../scripts/motion.ts';
   initMotion();
+
+  // mind map: pop in when scrolled into view
+  const mm = document.querySelector('[data-mm]');
+  if (mm) {
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          mm.classList.add('mm-on');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.25 }).observe(mm);
+  }
+
+  // lightbox for screenshots
+  const lb = document.getElementById('lightbox') as HTMLElement;
+  const lbImg = lb.querySelector('img') as HTMLImageElement;
+  document.querySelectorAll<HTMLImageElement>('[data-zoom]').forEach((img) => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lb.classList.add('open');
+    });
+  });
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.classList.remove('open'); });
 </script>

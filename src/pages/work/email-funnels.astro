@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { emails } from '../../data/emails.ts';
+
+---
+
+<Layout title="Email Funnels · Lays Paiva" description="The highest-converting email sequences I wrote for a DTC cellulite product: 45%+ open rates, full copy included.">
+  <Nav active="work" />
+
+  <article class="cs">
+    <header class="cs__head bg-acid">
+      <div class="wrap">
+        <a href="/#work" class="cs__back mono">← Back to work</a>
+        <h1 class="display cs__title">Email Funnels</h1>
+        <p class="cs__headline">Acquisition gets the applause; email gets the revenue.</p>
+        <p class="cs__intro">These are my highest-converting email sequences for a DTC cellulite product (Naked Beauty / The SYMULAST Method): a 5-email nurture flow that turned subscriber curiosity into purchases, with 45%+ open rates along the way. The same lifecycle instinct now powers the funnels I build for clients, like the qualified-lead flow at A Media Operator. Full copy below, expand any email to read it all.</p>
+      </div>
+    </header>
+
+    <section class="cs__body wrap">
+      {emails.map((e, i) => (
+        <div class={`em card reveal accent-${['acid', 'coral', 'cobalt', 'sun', 'lilac'][i % 5]}`}>
+          <div class="em__head">
+            <span class="em__num mono">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="em__name">{e.title}</h2>
+          </div>
+          <div class="letter" data-letter>
+            <div class="letter__body">
+              {e.blocks.map((b) => (
+                b.img ? (
+                  <img class="em__img" src={b.img} alt="Email asset" loading="lazy" />
+                ) : b.h ? (
+                  <h4 class="letter__sec-h mono">{b.h}</h4>
+                ) : (
+                  <p class="letter__p">{b.p}</p>
+                )
+              ))}
+            </div>
+            <div class="letter__fade" aria-hidden="true"></div>
+          </div>
+          <button class="btn btn--ghost letter__toggle" data-letter-toggle type="button">Read the full email ↓</button>
+        </div>
+      ))}
+    </section>
+
+    <a href="/work/vsl-production" class="cs__next bg-cobalt">
+      <div class="wrap cs__next-inner">
+        <span class="mono">Next project</span>
+        <span class="cs__next-name">VSL Production →</span>
+      </div>
+    </a>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .cs__head { border-bottom: var(--bd) solid var(--ink); padding-block: clamp(1.2rem, 3vw, 2rem) clamp(2.5rem, 5vw, 4rem); }
+  .cs__back { display: inline-block; font-weight: 700; text-decoration: none; margin: 0.6rem 0 1.6rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
+  .cs__cat { background: var(--paper-2); color: var(--ink); }
+  .cs__title { font-size: clamp(2.6rem, 8vw, 6rem); margin: 0.6rem 0 0.4rem; text-transform: uppercase; }
+  .cs__headline { font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 600; line-height: 1.25; margin-top: 1rem; max-width: 38ch; }
+  .cs__intro { margin-top: 1rem; max-width: 68ch; font-size: 1.02rem; line-height: 1.5; }
+
+  .cs__body { padding-block: clamp(2.5rem, 6vw, 5rem); display: flex; flex-direction: column; gap: clamp(1.6rem, 4vw, 2.6rem); }
+  .em { padding: clamp(1.4rem, 3.5vw, 2.2rem); }
+  .em__head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem; }
+  .em__num { font-size: 0.78rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 0.2em 0.7em; color: var(--coral); }
+  .em__name { font-size: clamp(1.3rem, 3vw, 1.9rem); }
+  .em__img { display: block; max-width: min(100%, 420px); height: auto; border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin: 0.9rem 0; background: var(--paper-2); }
+
+  .letter { position: relative; max-height: 16rem; overflow: hidden; }
+  .letter.is-open { max-height: none; }
+  .letter__body { border-left: 3px solid var(--ink); padding-left: clamp(0.9rem, 2.5vw, 1.6rem); }
+  .letter__sec-h { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; background: var(--ink); color: var(--acid); display: inline-block; padding: 0.3em 0.8em; border-radius: 999px; margin: 1.2rem 0 0.6rem; }
+  .letter__p { font-size: 0.97rem; line-height: 1.55; margin-bottom: 0.7rem; max-width: 72ch; }
+  .letter__fade { position: absolute; left: 0; right: 0; bottom: 0; height: 7rem; background: linear-gradient(to bottom, transparent, var(--paper-2)); pointer-events: none; }
+  .letter.is-open .letter__fade { display: none; }
+  .letter__toggle { margin-top: 1rem; font-size: 0.8rem; }
+
+  .cs__next { display: block; text-decoration: none; color: var(--paper-2); border-top: var(--bd) solid var(--ink); }
+  .cs__next-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 2rem; gap: 1rem; }
+  .cs__next-name { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 700; text-transform: uppercase; }
+  .cs__next:hover .cs__next-name { text-decoration: underline 3px; text-underline-offset: 5px; }
+</style>
+
+<script>
+  import { initMotion } from '../../scripts/motion.ts';
+  initMotion();
+
+  document.querySelectorAll('[data-letter-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const letter = btn.previousElementSibling as HTMLElement;
+      const open = letter.classList.toggle('is-open');
+      (btn as HTMLElement).textContent = open ? 'Collapse the email ↑' : 'Read the full email ↓';
+      if (!open) letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>

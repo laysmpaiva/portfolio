@@ -7,12 +7,27 @@ const { active = 'home' } = Astro.props;
     <span>Lays Paiva</span>
   </a>
   <nav class="nav__links">
+    <a href="/#tooling" class:list={[{ on: active === 'tooling' }]}>AI&nbsp;Tooling</a>
     <a href="/#work" class:list={[{ on: active === 'work' }]}>Work</a>
-    <a href="/#tooling">AI&nbsp;Tooling</a>
     <a href="/about" class:list={[{ on: active === 'about' }]}>About</a>
-    <a href="/#contact" class="btn btn--coral nav__cta">Hire me</a>
+    <a href="/#contact" class="btn btn--coral nav__cta" data-contact-cta>Hire me</a>
   </nav>
 </header>
+
+<script>
+  // "Hire me" scrolls to the contact section of the CURRENT page when it has one
+  document.querySelectorAll('[data-contact-cta]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const local = document.getElementById('contact');
+      if (local) {
+        e.preventDefault();
+        // force-reveal the section content so nothing is mid-animation on arrival
+        local.querySelectorAll('.reveal, .reveal--pop').forEach((el) => el.classList.add('is-in'));
+        local.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
 
 <style>
   .nav {

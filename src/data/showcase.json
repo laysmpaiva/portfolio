@@ -1,5 +1,5 @@
 {
-  "_note": "Managed ad spend WINDOWED to Lays' tenure per client (Pipeboard get_insights, account-level, pulled 2026-05-31). Not lifetime account totals. Workweek = sum of 6 brand accounts (Hospitalogy, Marketing Millennials, Go-to-Millions, Fintech Takes, I Hate It Here, Fintech Takes Banking).",
+  "_note": "Per-client spend WINDOWED to Lays' tenure per client (Pipeboard get_insights, account-level, pulled 2026-05-31). Not lifetime account totals. Workweek = sum of 6 brand accounts (Hospitalogy, Marketing Millennials, Go-to-Millions, Fintech Takes, I Hate It Here, Fintech Takes Banking). totalManagedSpend = career total across all accounts (per Lays), larger than the sum of the windowed clients listed here.",
   "spend": {
     "how-to-ai": 276439.63,
     "bytebytego": 259912.19,
@@ -14,7 +14,7 @@
     "a-media-operator": "Mar – May 2026",
     "insight-links": "Dec 2025 – May 2026"
   },
-  "totalManagedSpend": 1347274.99,
-  "window": "Oct 2025 — May 2026",
+  "totalManagedSpend": 5200000,
+  "window": "career total",
   "creatives": []
 }

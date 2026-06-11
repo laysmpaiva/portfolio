@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { profile, stats, capabilities, caseStudies, tooling, feedbacks } from '../data/content.ts';
+import { profile, stats, caseStudies, tooling, feedbacks } from '../data/content.ts';
 import showcase from '../data/showcase.json';
 
 const fmtSpend = (key: string) => {
@@ -37,26 +37,34 @@ const totalSpend = showcase.totalManagedSpend
           </svg>
         </p>
         <p class="hero__tag reveal">{profile.tagline}</p>
+        <ul class="hero__facts reveal">
+          <li><b>Now:</b> Growth Manager @ The Feed Media</li>
+          <li><b>Focus:</b> growing products end to end: SaaS, AI, media, ecommerce &amp; creator brands</li>
+          <li><b>Edge:</b> full-funnel execution + AI systems I build myself</li>
+        </ul>
         <div class="hero__actions reveal">
           <a href="#work" class="btn">See the numbers ↓</a>
-          <a href="#contact" class="btn btn--ghost">Let's talk</a>
+          <a href="/about" class="btn btn--cobalt">My career, day-to-day &amp; skills →</a>
         </div>
       </div>
       <div class="hero__photo-wrap reveal">
-        <figure class="photo">
-          <img src={profile.photo} alt="Lays Paiva" width="520" height="560" loading="eager" onerror="this.onerror=null;this.src='/lays-placeholder.svg'" />
-        </figure>
-        <span class="tape photo__tape-1 r-1" aria-hidden="true"></span>
+        <span class="hero__vlabel hand">watch first ↓</span>
+        <div class="hero__frame">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${profile.youtubeId}`}
+            title="Lays Paiva, intro"
+            loading="eager"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <span class="hero__vnote hand">↑ yes, that's me on camera. I do that.</span>
         <!-- floating sticker badges -->
-        <span class="hbadge hbadge--a floaty" style="--rot:-7deg" aria-hidden="true">685K subs ✷</span>
-        <span class="hbadge hbadge--b floaty floaty--b" style="--rot:6deg" aria-hidden="true">◉ open to work</span>
-        <span class="hbadge hbadge--c floaty floaty--c" style="--rot:-4deg" aria-hidden="true">$1.35M managed</span>
+        <span class="hbadge hbadge--a floaty" style="--rot:-7deg" aria-hidden="true">$5.2M managed ✷</span>
+        <span class="hbadge hbadge--b floaty floaty--b pulse" style="--rot:6deg" aria-hidden="true">◉ open to work</span>
         <svg class="scribble hero__star-doodle floaty" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
           <path class="draw" d="M20 3 L24 16 L37 20 L24 24 L20 37 L16 24 L3 20 L16 16 Z" stroke-width="4" />
-        </svg>
-        <svg class="scribble hero__arrow scribble--blue" viewBox="0 0 80 60" width="80" height="60" aria-hidden="true">
-          <path class="draw" d="M6 8 C 30 6, 50 22, 58 48" stroke-width="5" />
-          <path class="draw" d="M58 48 L48 40 M58 48 L60 35" stroke-width="5" />
         </svg>
       </div>
     </div>
@@ -67,69 +75,43 @@ const totalSpend = showcase.totalManagedSpend
     <div class="marquee__track">
       {Array.from({ length: 6 }).map(() => (
         <span class="marquee__group">
-          <b>SaaS</b> ✦ <b>Startups</b> ✦ <b>AI products</b> ✦ <b>Vibe marketing</b> ✦
-          <b>Paid acquisition</b> ✦ <b>CAC math</b> ✦ <b>UGC creative</b> ✦ <b>Conversion-first</b> ✦
+          <b>Newsletters</b> ✦ <b>SaaS</b> ✦ <b>Startups</b> ✦ <b>AI products</b> ✦ <b>Media &amp; creators</b> ✦ <b>DTC &amp; ecommerce</b> ✦
+          <b>Full-funnel growth</b> ✦ <b>Positioning &amp; offers</b> ✦ <b>Lifecycle email</b> ✦ <b>Paid acquisition</b> ✦ <b>Vibe marketing</b> ✦
         </span>
       ))}
     </div>
   </div>
 
-  <!-- ================= ABOUT + VIDEO ================= -->
-  <section id="about-teaser" class="intro">
+  <!-- ================= AI TOOLING ================= -->
+  <section id="tooling" class="tooling">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">01</span> Meet Lays</h2>
-      <div class="intro__grid">
-        <div class="intro__text reveal">
-          <p class="intro__lead">{profile.blurb}</p>
-          <ul class="intro__facts">
-            <li><b>Now:</b> Growth Manager @ The Feed Media</li>
-            <li><b>Focus:</b> SaaS · startups · AI products</li>
-            <li><b>Edge:</b> conversion-first creative + AI tooling I build myself</li>
-          </ul>
-          <a href="/about" class="btn btn--cobalt">My career, day-to-day &amp; skills →</a>
-        </div>
-        <div class="intro__video reveal">
-          <span class="intro__vlabel hand">watch first ↓</span>
-          <div class="intro__frame">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${profile.youtubeId}`}
-              title="Lays Paiva — intro"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= STATS ================= -->
-  <section id="impact" class="stats">
-    <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">02</span> The receipts</h2>
-      <div class="stats__grid">
-        {stats.map((s) => (
-          <div class={`stat card reveal accent-${s.color}`}>
-            <div class="stat__num" data-count={s.value} data-prefix={s.prefix ?? ''} data-suffix={s.suffix ?? ''}>
-              {s.prefix ?? ''}{s.value}{s.suffix ?? ''}
+      <h2 class="section-h reveal"><span class="num">01</span> I build my own tools</h2>
+      <p class="section-lead reveal muted">
+        Buying media is the easy part; the system around it is where growth actually compounds. I ship AI agents and automations that make the whole team faster. This is <span class="grad">vibe marketing</span> in practice.
+      </p>
+      <div class="tooling__grid">
+        {tooling.map((t) => (
+          <a href={`/tooling/${t.slug}`} class="tool card reveal--pop">
+            <div class="tool__top">
+              <span class="tag tool__tag">{t.tag}</span>
+              {t.delta ? <span class="tool__delta mono">{t.delta}</span> : null}
             </div>
-            <p class="stat__label">{s.label}</p>
-            <p class="stat__sub mono muted">{s.sub}</p>
-          </div>
+            <h3 class="tool__name">{t.name}</h3>
+            <p class="tool__desc muted">{t.desc}</p>
+            <span class="tool__more mono">How it works →</span>
+          </a>
         ))}
       </div>
+      <p class="tooling__ps reveal">Oh, and this website? Also <span class="grad">Claude Code</span>. Designed, built and maintained by me, prompt by prompt.</p>
     </div>
   </section>
 
   <!-- ================= MAIN PROJECTS ================= -->
   <section id="work" class="work">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">03</span> Main projects</h2>
+      <h2 class="section-h reveal"><span class="num">02</span> Main projects</h2>
       <p class="section-lead reveal muted">
-        SaaS, startup &amp; AI products I've scaled. Results are documented; ad spend is
-        <strong>managed spend over my time on each account</strong>{totalSpend ? <> — {totalSpend} total</> : null}, not lifetime account totals. <span class="mono">Click any card for the full case →</span>
+        SaaS, AI, media, creator &amp; DTC products I've scaled. Results documented, receipts included{totalSpend ? <>, {totalSpend} managed across my career</> : null}. <span class="mono">Click any card →</span>
       </p>
 
       <div class="work__list">
@@ -149,12 +131,10 @@ const totalSpend = showcase.totalManagedSpend
                   <span class="cv-word">{c.client}</span>
                   {c.person && !c.kind ? <span class="cv-person mono">{c.person}</span> : null}
                 </div>
-                <span class="tape case__tape r-3" aria-hidden="true"></span>
               </div>
               <div class="case__body">
                 <div class="case__top">
                   <span class="tag">{c.category}</span>
-                  <span class="mono muted case__span">{c.span}</span>
                 </div>
                 <h3 class="case__client">{c.client} <span class="muted case__person">/ {c.person}</span></h3>
                 <p class="case__headline">{c.headline}</p>
@@ -163,8 +143,7 @@ const totalSpend = showcase.totalManagedSpend
                   {c.results.map((r) => (
                     <div class="result">
                       <span class="result__v">{r.v}</span>
-                      <span class="result__k mono">{r.k}</span>
-                      {r.note ? <span class="result__n muted">{r.note}</span> : null}
+                      <span class="result__k mono">{r.k}{r.note ? <span class="result__n muted"> · {r.note}</span> : null}</span>
                     </div>
                   ))}
                 </div>
@@ -180,64 +159,43 @@ const totalSpend = showcase.totalManagedSpend
     </div>
   </section>
 
-  <!-- ================= FEEDBACKS ================= -->
-  <section id="feedbacks" class="fb">
+  <!-- ================= STATS ================= -->
+  <section id="impact" class="stats">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">04</span> What people say</h2>
-      <div class="fb__quotes">
-        {feedbacks.quotes.map((f) => (
-          <blockquote class={`fb__q card reveal accent-${f.color}`}>
-            <p class="fb__text">“{f.quote}”</p>
-            <footer class="fb__who mono">— {f.who} <span class="muted">· {f.ctx}</span></footer>
-          </blockquote>
-        ))}
-      </div>
-      <p class="fb__label eyebrow reveal">◆ Verified client reviews</p>
-      <div class="fb__shots">
-        {feedbacks.screenshots.map((src, i) => (
-          <figure class={`fb__shot reveal r-${(i % 4) + 1}`}>
-            <img src={src} alt="Client review" loading="lazy" width="480" height="270" />
-          </figure>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CAPABILITIES ================= -->
-  <section id="capabilities" class="caps">
-    <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">05</span> How I operate</h2>
-      <p class="section-lead reveal muted">A repeatable method, not vibes — research the audience, build creative that converts, buy &amp; scale against CAC, then turn what works into tooling.</p>
-      <div class="caps__grid">
-        {capabilities.map((c) => (
-          <div class={`cap card reveal accent-${c.color}`}>
-            <div class="cap__top">
-              <span class="cap__icon" aria-hidden="true">{c.icon}</span>
-              <span class="cap__step mono">{c.step}</span>
+      <h2 class="section-h reveal"><span class="num">03</span> The receipts</h2>
+      <div class="stats__grid">
+        {stats.map((s) => (
+          <div class={`stat card reveal--pop accent-${s.color}`}>
+            <div class="stat__num grad-ink" data-count={s.value} data-prefix={s.prefix ?? ''} data-suffix={s.suffix ?? ''}>
+              {s.prefix ?? ''}{s.value}{s.suffix ?? ''}
             </div>
-            <h3 class="cap__title">{c.title}</h3>
-            <p class="cap__body muted">{c.body}</p>
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__sub mono muted">{s.sub}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ================= AI TOOLING ================= -->
-  <section id="tooling" class="tooling">
+  <!-- ================= FEEDBACKS ================= -->
+  <section id="feedbacks" class="fb">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">06</span> I build my own tools</h2>
-      <p class="section-lead reveal muted">
-        Modern growth isn't just buying media — it's building the system around it. I ship AI agents and automations that make the whole team faster. This is <span class="mark mark--lilac">vibe marketing</span> in practice.
-      </p>
-      <div class="tooling__grid">
-        {tooling.map((t) => (
-          <a href={`/tooling/${t.slug}`} class="tool card reveal">
-            <span class="tag tool__tag">{t.tag}</span>
-            <h3 class="tool__name">{t.name}</h3>
-            <p class="tool__desc muted">{t.desc}</p>
-            <span class="tool__more mono">How it works →</span>
-          </a>
+      <h2 class="section-h reveal"><span class="num">04</span> What people say</h2>
+      <p class="fb__label fb__label--first eyebrow reveal">◆ Verified client reviews</p>
+      <div class="fb__shots">
+        {feedbacks.screenshots.map((src, i) => (
+          <figure class={`fb__shot reveal--pop r-${(i % 4) + 1}`}>
+            <img src={src} alt="Client review" loading="lazy" width="480" height="270" />
+          </figure>
+        ))}
+      </div>
+      <p class="fb__label eyebrow reveal">◆ Straight from Slack</p>
+      <div class="fb__quotes">
+        {feedbacks.quotes.map((f) => (
+          <blockquote class={`fb__q card reveal--pop accent-${f.color}`}>
+            <p class="fb__text">“{f.quote}”</p>
+            <footer class="fb__who mono">{f.who} <span class="muted">· {f.ctx}</span></footer>
+          </blockquote>
         ))}
       </div>
     </div>
@@ -246,7 +204,7 @@ const totalSpend = showcase.totalManagedSpend
   <!-- ================= CONTACT ================= -->
   <section id="contact" class="contact">
     <div class="wrap center">
-      <p class="eyebrow reveal">{profile.available ? '◉ open to SaaS / startup roles' : 'Get in touch'}</p>
+      <p class="eyebrow reveal">{profile.available ? '◉ open to growth & marketing lead roles' : 'Get in touch'}</p>
       <h2 class="display contact__title reveal">LET'S<br>GROW<br>SOMETHING</h2>
       <div class="contact__actions reveal">
         <a href={`mailto:${profile.email}`} class="btn btn--cobalt">Email me ✉</a>
@@ -261,7 +219,7 @@ const totalSpend = showcase.totalManagedSpend
 <style>
   /* ---------- HERO ---------- */
   .hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); padding-bottom: clamp(2rem, 5vw, 4rem); }
-  .hero__inner { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+  .hero__inner { position: relative; display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
   .hero__name { margin: 0.4rem 0 0.8rem; font-size: clamp(3.4rem, 10vw, 8rem); }
   .hero__name > span { display: block; }
   .hero__dot { color: var(--coral); }
@@ -270,24 +228,25 @@ const totalSpend = showcase.totalManagedSpend
   .hero__rotor span { background-image: linear-gradient(var(--acid), var(--acid)); background-repeat: no-repeat; background-size: 100% 42%; background-position: 0 82%; padding: 0 .08em; }
   .hero__squiggle { position: absolute; left: 0; bottom: -18px; width: clamp(220px, 60%, 320px); height: 22px; color: var(--coral); }
   .hero__tag { max-width: 38ch; font-size: clamp(1.05rem, 2.2vw, 1.4rem); font-weight: 500; line-height: 1.3; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.8rem; }
-  .hero__photo-wrap { position: relative; justify-self: center; }
-  .photo { margin: 0; background: var(--paper-2); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 12px 12px 0; width: min(80vw, 360px); }
-  .photo img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 2px solid var(--ink); background: repeating-linear-gradient(45deg, var(--lilac), var(--lilac) 12px, var(--paper-2) 12px, var(--paper-2) 24px); }
-  .photo figcaption { font-size: 1.35rem; text-align: center; padding: 0.35rem 0 0.6rem; }
-  .photo__tape-1 { top: -16px; left: 30px; } .photo__tape-2 { bottom: 38px; right: -22px; }
+  .hero__facts { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.4rem; }
+  .hero__facts li { position: relative; padding-left: 1.5rem; font-size: 0.96rem; }
+  .hero__facts li::before { content: "▸"; position: absolute; left: 0; color: var(--coral); font-weight: 700; }
+  .hero__facts b { font-weight: 700; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.6rem; }
+  .hero__photo-wrap { position: relative; justify-self: stretch; width: 100%; max-width: 720px; }
+  .hero__vlabel { position: absolute; top: -40px; right: 14px; font-size: 1.7rem; color: var(--cobalt); transform: rotate(4deg); z-index: 3; }
+  .hero__vnote { display: block; margin-top: 0.8rem; text-align: right; font-size: 1.45rem; color: var(--coral); transform: rotate(-2deg); }
+  .hero__frame { border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; aspect-ratio: 16 / 9; background: var(--ink); }
+  .hero__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
   .hbadge { position: absolute; z-index: 6; font-family: var(--font-mono); font-weight: 700; font-size: 0.74rem; padding: 0.5em 0.85em; border: var(--bd) solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-sm); white-space: nowrap; }
-  .hbadge--a { top: -18px; left: -24px; background: var(--sun); }
-  .hbadge--b { bottom: 56px; right: -34px; background: var(--acid); color: var(--ink); }
-  .hbadge--c { bottom: -16px; left: 10px; background: var(--paper-2); }
-  .hero__star-doodle { top: -30px; right: 26px; color: var(--coral); }
-  .hero__arrow { bottom: -34px; right: 60px; }
+  .hbadge--a { top: -16px; left: -20px; background: var(--sun); }
+  .hbadge--b { bottom: -16px; right: -14px; background: var(--acid); color: var(--ink); }
+  .hero__star-doodle { top: -34px; left: 42%; color: var(--coral); }
   @media (max-width: 820px) {
     .hero__inner { grid-template-columns: 1fr; }
-    .hero__photo-wrap { order: -1; margin-bottom: 0.5rem; }
-    .photo { width: min(72vw, 280px); }
-    .hbadge--c, .hero__arrow { display: none; }
-    .hbadge--a { left: -8px; } .hbadge--b { right: -8px; }
+    .hero__photo-wrap { order: -1; margin-bottom: 0.8rem; max-width: none; }
+    .hero__vlabel { display: none; }
+    .hbadge--a { left: -6px; } .hbadge--b { right: -6px; }
   }
 
   /* ---------- MARQUEE ---------- */
@@ -309,8 +268,8 @@ const totalSpend = showcase.totalManagedSpend
 
   /* ---------- WORK ---------- */
   .work__list { display: grid; gap: 2.4rem; }
-  .case { display: grid; grid-template-columns: 0.85fr 1.15fr; overflow: hidden; text-decoration: none; color: inherit; transition: transform .14s ease, box-shadow .14s ease; }
-  .case:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-lg); }
+  .case { display: grid; grid-template-columns: 0.85fr 1.15fr; overflow: hidden; text-decoration: none; color: inherit; transition: transform .22s var(--ease-out), box-shadow .25s ease; }
+  .case:hover { transform: translate(-3px,-6px); box-shadow: var(--shadow-lg), 0 22px 44px rgba(20,18,16,.18); }
   .case--flip .case__media { order: 2; }
   .case__media { position: relative; min-height: 280px; border-right: var(--bd) solid var(--ink); }
   .case--flip .case__media { border-right: none; border-left: var(--bd) solid var(--ink); }
@@ -320,19 +279,17 @@ const totalSpend = showcase.totalManagedSpend
   .cv-emoji { font-size: clamp(3rem, 7vw, 5rem); line-height: 1; }
   .cv-word { font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.92; }
   .cv-person { font-size: 0.74rem; font-weight: 700; background: var(--paper-2); color: var(--ink); border: 2px solid var(--ink); padding: 0.25em 0.7em; border-radius: 999px; }
-  .case__tape { top: 14px; right: 14px; }
   .case__body { padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem; }
   .case__top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-  .case__span { font-size: 0.74rem; }
   .case__client { font-size: clamp(1.3rem, 3vw, 1.9rem); }
   .case__person { font-size: 0.7em; font-weight: 500; }
   .case__headline { font-weight: 600; font-size: 1.12rem; line-height: 1.25; }
   .case__text { font-size: 0.95rem; }
   .case__results { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 0.5rem; padding-top: 1rem; border-top: 2px dashed var(--ink); }
-  .result { display: flex; flex-direction: column; }
-  .result__v { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
-  .result__k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
-  .result__n { font-size: 0.72rem; }
+  .result { display: flex; flex-direction: column; gap: 0.25rem; }
+  .result__v { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .result__k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.45; }
+  .result__n { font-size: inherit; text-transform: none; letter-spacing: 0.02em; }
   .case__foot { margin-top: auto; padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; justify-content: space-between; }
   .case__pill { border-radius: 4px; padding: 0.45em 0.8em; font-size: 0.72rem; max-width: 55%; }
   .case__more { font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.7rem; }
@@ -348,22 +305,11 @@ const totalSpend = showcase.totalManagedSpend
   .fb__text { font-size: 1.15rem; font-weight: 500; line-height: 1.35; }
   .fb__who { margin-top: 0.9rem; font-size: 0.82rem; font-weight: 700; }
   .fb__label { margin: 2.6rem 0 1.1rem; }
-  .fb__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
-  .fb__shot { margin: 0; border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--paper-2); padding: 8px; overflow: hidden; }
+  .fb__label--first { margin-top: 0; }
+  .fb__shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+  .fb__shot { margin: 0; border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--paper-2); padding: 10px; overflow: hidden; }
   .fb__shot img { display: block; width: 100%; height: auto; border-radius: 2px; }
   @media (max-width: 760px) { .fb__quotes { grid-template-columns: 1fr; } .fb__shots { grid-template-columns: 1fr; } }
-
-  /* ---------- CAPABILITIES ---------- */
-  .caps__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
-  .cap { padding: 1.5rem 1.3rem; transition: transform .14s ease, box-shadow .14s ease; }
-  .cap:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-lg); }
-  .cap__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
-  .cap__icon { font-size: 1.9rem; line-height: 1; }
-  .cap__step { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: 0.15em 0.6em; }
-  .cap__title { font-size: 1.25rem; margin-bottom: 0.6rem; }
-  .cap__body { font-size: 0.92rem; }
-  @media (max-width: 900px) { .caps__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 500px) { .caps__grid { grid-template-columns: 1fr; } }
 
   /* ---------- TOOLING ---------- */
   .tooling { background: var(--ink); color: var(--paper); }
@@ -371,29 +317,24 @@ const totalSpend = showcase.totalManagedSpend
   .tooling .section-lead.muted { color: rgba(242,236,217,0.7); }
   .tooling .section-h .num { color: var(--acid); border-color: var(--paper); }
   .tooling__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
-  .tool { display: block; background: #1f1c19; color: var(--paper); border-color: var(--paper); box-shadow: 6px 6px 0 var(--acid); padding: 1.4rem; text-decoration: none; transition: transform .14s ease, box-shadow .14s ease; }
-  .tool:hover { transform: translate(-3px,-3px); box-shadow: 10px 10px 0 var(--acid); }
+  .tool { display: block; background: #1f1c19; color: var(--paper); border-color: var(--paper); box-shadow: 6px 6px 0 var(--acid); padding: 1.4rem; text-decoration: none; transition: transform .22s var(--ease-out), box-shadow .25s ease; }
+  .tool:hover { transform: translate(-3px,-6px); box-shadow: 10px 10px 0 var(--acid), 0 22px 44px rgba(0,0,0,.5); }
+  .tool__top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; }
+  .tool__delta { font-size: 0.74rem; font-weight: 700; color: var(--acid); border: 2px dashed rgba(201,242,39,0.55); border-radius: 999px; padding: 0.2em 0.7em; }
   .tool__name { font-size: 1.2rem; margin: 0.7rem 0 0.5rem; }
   .tool__desc { font-size: 0.92rem; color: rgba(242,236,217,0.72); }
   .tool__tag { background: var(--acid); color: var(--ink); }
   .tool__more { display: inline-block; margin-top: 0.9rem; font-size: 0.78rem; font-weight: 700; color: var(--acid); }
+  .tooling__ps { margin-top: 2rem; font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; color: var(--paper); }
   @media (max-width: 700px) { .tooling__grid { grid-template-columns: 1fr; } }
 
-  /* ---------- INTRO + VIDEO ---------- */
-  .intro__grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
-  .intro__lead { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 500; line-height: 1.35; }
-  .intro__facts { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1.4rem 0 1.8rem; }
-  .intro__facts li { position: relative; padding-left: 1.5rem; font-size: 0.98rem; }
-  .intro__facts li::before { content: "▸"; position: absolute; left: 0; color: var(--coral); font-weight: 700; }
-  .intro__facts b { font-weight: 700; }
-  .intro__video { position: relative; }
-  .intro__vlabel { position: absolute; top: -42px; left: 8px; font-size: 1.7rem; color: var(--cobalt); transform: rotate(-4deg); z-index: 3; }
-  .intro__frame { border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; aspect-ratio: 16 / 9; background: var(--ink); }
-  .intro__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-  @media (max-width: 820px) { .intro__grid { grid-template-columns: 1fr; } .intro__vlabel { display: none; } }
-
   /* ---------- CONTACT ---------- */
-  .contact { background: var(--acid); border-top: var(--bd) solid var(--ink); }
+  .contact {
+    background: var(--acid); border-top: var(--bd) solid var(--ink);
+    min-height: calc(100svh - 58px);
+    display: flex; align-items: center; justify-content: center;
+    padding-block: clamp(2rem, 4vw, 4rem);
+  }
   .contact__title { margin: 0.5rem 0 2rem; }
   .contact__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 </style>

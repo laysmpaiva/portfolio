@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 function revealAll() {
-  document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+  document.querySelectorAll('.reveal, .reveal--pop').forEach((el) => el.classList.add('is-in'));
 }
 
 export function initMotion() {
@@ -40,12 +40,28 @@ function runMotion() {
       }),
   });
 
+  // ---- springy pop-in for grid items (deck-style staggered entrance) ----
+  ScrollTrigger.batch('.reveal--pop', {
+    start: 'top 90%',
+    onEnter: (els) =>
+      gsap.to(els, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.55,
+        ease: 'back.out(1.5)',
+        stagger: 0.09,
+        overwrite: true,
+        onStart: () => els.forEach((e) => e.classList.add('is-in')),
+      }),
+  });
+
   // ---- animated stat counters ----
   document.querySelectorAll<HTMLElement>('.stat__num').forEach((el) => {
     const target = parseFloat(el.dataset.count || '0');
     const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
-    const decimals = target % 1 !== 0 ? 2 : 0;
+    const decimals = target % 1 === 0 ? 0 : target < 1 ? 2 : 1;
     const obj = { n: 0 };
     ScrollTrigger.create({
       trigger: el,

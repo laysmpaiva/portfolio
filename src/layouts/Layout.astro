@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title = 'Lays Paiva — Growth Marketer for SaaS, Startups & AI', description = 'Growth marketer scaling SaaS, startup and AI products with paid acquisition, conversion-first creative, and AI-built tooling.' } = Astro.props;
+const { title = 'Lays Paiva · Growth Marketer for SaaS, AI, Media & DTC', description = 'Growth marketer scaling SaaS, AI, media, creator and ecommerce products end to end: paid acquisition, funnels, email, offers, and AI-built tooling.' } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,6 +27,15 @@ const { title = 'Lays Paiva — Growth Marketer for SaaS, Startups & AI', descri
             });
           }
         }, 1500);
+        // re-snap to the anchor once everything (images/videos) has loaded,
+        // otherwise the browser jumps too early and lands mid-page
+        if (location.hash) {
+          var target = document.querySelector(location.hash);
+          if (target) {
+            target.querySelectorAll('.reveal, .reveal--pop').forEach(function (el) { el.classList.add('is-in'); });
+            setTimeout(function () { target.scrollIntoView(); }, 80);
+          }
+        }
       });
     </script>
   </head>
