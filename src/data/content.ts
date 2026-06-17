@@ -51,7 +51,7 @@ export const method = {
 };
 
 // ---- Case studies / main projects ----
-// `face` = founder photo (circle); `logo` = brand mark; else wordmark fallback.
+// `logo` = brand mark (box); else uppercase wordmark fallback. Client faces removed (likeness not cleared).
 // `kind: 'product'` = Lays' own product (no client/spend).
 export const caseStudies = [
   {
@@ -61,8 +61,8 @@ export const caseStudies = [
     category: 'Dev tools · Tech education',
     accent: 'cobalt',
     spendKey: 'bytebytego',
-    face: '/faces/alex-xu.jpg',
-    logo: null,
+    face: null,
+    logo: '/logos/bytebytego.png',
     image: '/creatives/bytebytego/01-read-x.png',
     adName: 'DCT_114 · "Read X"',
     headline: 'Beat the incumbent agency head-to-head while spending ~5.6× less.',
@@ -103,7 +103,7 @@ export const caseStudies = [
     category: 'Creator product · Wellness',
     accent: 'coral',
     spendKey: null,
-    face: '/faces/jay-shetty.jpg',
+    face: null,
     logo: null,
     image: '/creatives/jay-shetty/01-im-jay-shetty.jpg',
     adName: 'DCT_105 · "Hi, I\'m Jay Shetty"',
@@ -145,7 +145,7 @@ export const caseStudies = [
     category: 'AI · Education product',
     accent: 'acid',
     spendKey: 'how-to-ai',
-    face: '/faces/ruben-hassid.jpg',
+    face: null,
     logo: null,
     image: '/creatives/how-to-ai/01-ai-didnt-replace-you.png',
     adName: 'DCT_154 · "AI Didn\'t Replace You"',
@@ -187,7 +187,7 @@ export const caseStudies = [
     category: 'B2B · Fintech · Health-tech',
     accent: 'sun',
     spendKey: 'workweek',
-    face: '/faces/mike-madarasz.jpg',
+    face: null,
     logo: '/logos/workweek.png',
     image: '/creatives/workweek/02-ihih-this-is-for-you.png',
     adName: 'DCT_168 · "This Is For You"',
@@ -229,7 +229,7 @@ export const caseStudies = [
     category: 'B2B SaaS-adjacent · Niche media',
     accent: 'lilac',
     spendKey: 'a-media-operator',
-    face: '/faces/jacob-donnelly.jpg',
+    face: null,
     logo: '/logos/amo.webp',
     image: '/creatives/a-media-operator/01-if-you-work-in.png',
     adName: 'DCT_106 · "If You Work In…"',

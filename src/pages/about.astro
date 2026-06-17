@@ -70,45 +70,10 @@ const fSegs = Array.from({ length: 5 }, (_, i) => {
     </div>
   </section>
 
-  <!-- career -->
-  <section class="ab-career">
-    <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">01</span> Companies I've grown</h2>
-      <div class="timeline">
-        {career.spotlight.map((j) => (
-          <article class={`job card reveal ${j.now ? 'job--now accent-acid' : 'accent-cobalt'}`}>
-            <div class="job__head">
-              <div>
-                <h3 class="job__co">{j.company} {j.now ? <span class="job__badge">NOW</span> : null}</h3>
-                <p class="job__role">{j.role}</p>
-              </div>
-              <div class="job__meta mono muted">
-                <span>{j.period}</span><br /><span>{j.type}</span>
-              </div>
-            </div>
-            <p class="job__body">{j.body}</p>
-            <ul class="job__points">
-              {j.points.map((p) => <li>{p}</li>)}
-            </ul>
-          </article>
-        ))}
-      </div>
-
-      <p class="eyebrow ab-earlier-label reveal">◆ Earlier roles</p>
-      <div class="earlier">
-        {career.earlier.map((e, i) => (
-          <span class={`earlier__chip card reveal--pop r-${(i % 4) + 1}`}>
-            <b>{e.company}</b><span class="mono muted"> · {e.role}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- the whole funnel -->
   <section class="ab-funnel">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">02</span> I grow the whole funnel</h2>
+      <h2 class="section-h reveal"><span class="num">01</span> I grow the whole funnel</h2>
       <p class="section-lead reveal muted">{funnel.lead}</p>
       <div class="funnel" data-funnel>
         <div class="funnel__fig">
@@ -174,6 +139,41 @@ const fSegs = Array.from({ length: 5 }, (_, i) => {
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- career -->
+  <section class="ab-career">
+    <div class="wrap">
+      <h2 class="section-h reveal"><span class="num">02</span> Companies I've grown</h2>
+      <div class="timeline">
+        {career.spotlight.map((j) => (
+          <article class={`job card reveal ${j.now ? 'job--now accent-acid' : 'accent-cobalt'}`}>
+            <div class="job__head">
+              <div>
+                <h3 class="job__co">{j.company} {j.now ? <span class="job__badge">NOW</span> : null}</h3>
+                <p class="job__role">{j.role}</p>
+              </div>
+              <div class="job__meta mono muted">
+                <span>{j.type}</span>
+              </div>
+            </div>
+            <p class="job__body">{j.body}</p>
+            <ul class="job__points">
+              {j.points.map((p) => <li>{p}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <p class="eyebrow ab-earlier-label reveal">◆ Earlier roles</p>
+      <div class="earlier">
+        {career.earlier.map((e, i) => (
+          <span class={`earlier__chip card reveal--pop r-${(i % 4) + 1}`}>
+            <b>{e.company}</b><span class="mono muted"> · {e.role}</span>
+          </span>
+        ))}
       </div>
     </div>
   </section>

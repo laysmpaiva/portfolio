@@ -40,7 +40,9 @@ const { c, next } = Astro.props;
               <img class="cs__hero-face r-2" src={c.face} alt={c.person} width="240" height="240" loading="eager" />
             ) : c.logo ? (
               <img class="cs__hero-logo r-2" src={c.logo} alt={`${c.client} logo`} loading="eager" />
-            ) : null}
+            ) : (
+              <span class="cs__hero-word r-2">{c.client}</span>
+            )}
           </figure>
         </div>
       </div>
@@ -142,6 +144,7 @@ const { c, next } = Astro.props;
   .cs__hero-shot { margin: 0; justify-self: center; }
   .cs__hero-face { width: clamp(170px, 24vw, 260px); height: clamp(170px, 24vw, 260px); border-radius: 50%; object-fit: cover; border: var(--bd) solid var(--ink); box-shadow: var(--shadow-lg); background: var(--paper-2); display: block; }
   .cs__hero-logo { max-width: 280px; max-height: 150px; background: var(--paper-2); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.4rem 1.8rem; box-sizing: border-box; object-fit: contain; display: block; }
+  .cs__hero-word { display: inline-block; font-weight: 700; font-size: clamp(1.7rem, 3vw, 2.6rem); text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.95; background: var(--paper-2); border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.3rem 1.7rem; max-width: 320px; box-sizing: border-box; }
   @media (max-width: 760px) { .cs__head-grid { grid-template-columns: 1fr; } .cs__hero-shot { order: -1; } }
 
   .cs__body { padding-block: clamp(2.5rem, 6vw, 5rem); }
