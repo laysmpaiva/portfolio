@@ -31,7 +31,7 @@ const { c, next } = Astro.props;
           <div>
             <span class="tag cs__cat">{c.category}</span>
             <h1 class="display cs__title">{c.client}</h1>
-            <p class="cs__person mono">{c.person}</p>
+            {c.person ? <p class="cs__person mono">{c.person}</p> : null}
             <p class="cs__headline">{c.headline}</p>
             <p class="cs__intro">{c.body}</p>
           </div>
@@ -64,8 +64,7 @@ const { c, next } = Astro.props;
       </div>
 
       <!-- metrics -->
-      <h2 class="cs__h reveal">The numbers</h2>
-      {c.spendKey ? <p class="cs__note mono muted reveal">Managed ad spend is windowed to my time on the account, not the lifetime account total.</p> : null}
+      <h2 class="cs__h reveal">Highlights</h2>
       <div class="cs__metrics">
         {c.metrics.map((m) => (
           <div class="metric card reveal--pop">

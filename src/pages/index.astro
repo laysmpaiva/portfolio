@@ -111,7 +111,7 @@ const totalSpend = showcase.totalManagedSpend
     <div class="wrap">
       <h2 class="section-h reveal"><span class="num">02</span> Main projects</h2>
       <p class="section-lead reveal muted">
-        SaaS, AI, media, creator &amp; DTC products I've scaled. Results documented, receipts included{totalSpend ? <>, {totalSpend} managed across my career</> : null}. <span class="mono">Click any card →</span>
+        SaaS, AI, media, creator &amp; DTC products I've scaled end to end{totalSpend ? <>, {totalSpend} managed across my career</> : null}. <span class="mono">Click any card →</span>
       </p>
 
       <div class="work__list">
@@ -136,7 +136,7 @@ const totalSpend = showcase.totalManagedSpend
                 <div class="case__top">
                   <span class="tag">{c.category}</span>
                 </div>
-                <h3 class="case__client">{c.client} <span class="muted case__person">/ {c.person}</span></h3>
+                <h3 class="case__client">{c.client}{c.person ? <span class="muted case__person"> / {c.person}</span> : null}</h3>
                 <p class="case__headline">{c.headline}</p>
                 <p class="case__text muted">{c.body}</p>
                 <div class="case__results">
@@ -149,7 +149,7 @@ const totalSpend = showcase.totalManagedSpend
                 </div>
                 <div class="case__foot">
                   <span class="sticker case__pill r-2">{c.pill}</span>
-                  <span class="case__more mono">{spend ? <span class="case__spend">▲ {spend} managed</span> : null} View case →</span>
+                  <span class="case__more mono">View case →</span>
                 </div>
               </div>
             </a>
