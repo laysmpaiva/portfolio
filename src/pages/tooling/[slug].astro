@@ -154,6 +154,12 @@ const mmColor = (g: string) => (s.mindmap.groups.find((gr: any) => gr.key === g)
               <figure class="shotfig">
                 <img class="shot" src={w.img} alt={w.imgCap || w.h} loading="lazy" data-zoom />
                 <figcaption class="shot__cap mono muted">{w.imgCap}</figcaption>
+                {w.img2 ? (
+                  <>
+                    <img class="shot shot--tall" src={w.img2} alt={w.imgCap2 || w.h} loading="lazy" data-zoom />
+                    <figcaption class="shot__cap mono muted">{w.imgCap2}</figcaption>
+                  </>
+                ) : null}
               </figure>
             ) : null}
           </div>
@@ -304,6 +310,7 @@ const mmColor = (g: string) => (s.mindmap.groups.find((gr: any) => gr.key === g)
 
   /* ---------- screenshots + prompt blocks ---------- */
   .shotfig { margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .shot--tall { max-height: 78vh; width: auto; max-width: 100%; margin-inline: auto; margin-top: 0.6rem; }
   .shot { width: 100%; height: auto; border: var(--bd) solid var(--ink); border-radius: 6px; box-shadow: var(--shadow); background: var(--ink); cursor: zoom-in; transition: transform 0.2s var(--ease-out), box-shadow 0.25s ease; display: block; }
   .shot:hover { transform: scale(1.015) translateY(-3px); box-shadow: var(--shadow), 0 18px 38px rgba(20,18,16,0.2); }
   .shot__cap { font-size: 0.74rem; }

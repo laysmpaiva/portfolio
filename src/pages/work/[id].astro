@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { caseStudies, method } from '../../data/content.ts';
+import { caseStudies, method, ownership } from '../../data/content.ts';
 
 export function getStaticPaths() {
   // Own-product pages (VSL Production, Email Funnels) have dedicated pages.
@@ -17,6 +17,9 @@ export function getStaticPaths() {
 }
 
 const { c, next } = Astro.props;
+
+// accent palette progression for the "what I own" pipeline nodes
+const ownColors = ['var(--cobalt)', 'var(--lilac)', 'var(--coral)', 'var(--sun)', 'var(--acid)', 'var(--pink)'];
 ---
 
 <Layout title={`${c.client} · Lays Paiva`} description={c.headline}>
@@ -30,8 +33,8 @@ const { c, next } = Astro.props;
         <div class="cs__head-grid">
           <div>
             <span class="tag cs__cat">{c.category}</span>
-            <h1 class="display cs__title">{c.client}</h1>
-            {c.person ? <p class="cs__person mono">{c.person}</p> : null}
+            <h1 class="display cs__title">{c.site ? <a href={c.site} target="_blank" rel="noopener" class="cs__sitelink">{c.client} <span class="cs__ext" aria-hidden="true">↗</span></a> : c.client}</h1>
+            {c.founder ? <p class="cs__person mono">{c.founderLabel || 'Founder'} · {c.founder}</p> : c.person ? <p class="cs__person mono">{c.person}</p> : null}
             <p class="cs__headline">{c.headline}</p>
             <p class="cs__intro">{c.body}</p>
           </div>
@@ -41,7 +44,7 @@ const { c, next } = Astro.props;
             ) : c.logo ? (
               <img class="cs__hero-logo r-2" src={c.logo} alt={`${c.client} logo`} loading="eager" />
             ) : (
-              <span class="cs__hero-word r-2">{c.client}</span>
+              <span class="cs__hero-word r-2">{c.site ? <a href={c.site} target="_blank" rel="noopener" class="cs__sitelink">{c.client}</a> : c.client}</span>
             )}
           </figure>
         </div>
@@ -63,15 +66,24 @@ const { c, next } = Astro.props;
         </div>
       </div>
 
-      <!-- metrics -->
-      <h2 class="cs__h reveal">Highlights</h2>
-      <div class="cs__metrics">
-        {c.metrics.map((m) => (
-          <div class="metric card reveal--pop">
-            <span class="metric__v">{m.v}</span>
-            <span class="metric__k mono">{m.k}{m.note ? <span class="metric__n muted"> · {m.note}</span> : null}</span>
-          </div>
-        ))}
+      <!-- what I own (animated pipeline) -->
+      <h2 class="cs__h reveal">What I own here</h2>
+      <p class="cs__scope-lead muted reveal">The full loop, not a slice of it. On this account I run:</p>
+      <div class="own">
+        <svg class="own__rail" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true">
+          <path class="draw" d="M2 1 H998" stroke-width="2.5" />
+        </svg>
+        <ol class="own__nodes">
+          {ownership.map((s, i) => (
+            <li class="own__node reveal--pop">
+              <span class="own__dot" style={`background:${ownColors[i % ownColors.length]}`}>
+                <span class="own__icon" aria-hidden="true">{s.icon}</span>
+              </span>
+              <span class="own__n mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="own__t">{s.t}</span>
+            </li>
+          ))}
+        </ol>
       </div>
 
       <!-- how the winning ad got made (ByteByteGo only) -->
@@ -103,7 +115,7 @@ const { c, next } = Astro.props;
       <!-- ads -->
       {c.media && c.media.length ? (
         <>
-          <h2 class="cs__h reveal">The ads</h2>
+          <h2 class="cs__h reveal">Some ads I built</h2>
           <div class="cs__gallery">
             {c.media.map((g) => (
               <figure class="ad reveal--pop">
@@ -137,6 +149,9 @@ const { c, next } = Astro.props;
   .cs__head-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 2rem; align-items: center; }
   .cs__cat { display: block; width: fit-content; font-size: 1rem; font-weight: 700; padding: 0.4em 0.8em; border: 2px solid var(--ink); background: var(--pink); color: var(--ink); box-shadow: var(--shadow-sm); }
   .cs__title { font-size: clamp(2.6rem, 8vw, 6rem); margin: 0.6rem 0 0.4rem; text-transform: uppercase; }
+  .cs__sitelink { color: inherit; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; text-decoration-color: var(--ink); }
+  .cs__sitelink:hover { text-decoration-color: var(--coral); }
+  .cs__ext { font-size: 0.4em; vertical-align: super; }
   .cs__person { font-weight: 700; font-size: 0.9rem; }
   .cs__headline { font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 600; line-height: 1.25; margin-top: 1rem; max-width: 30ch; }
   .cs__intro { margin-top: 1rem; max-width: 52ch; font-size: 1.02rem; line-height: 1.45; }
@@ -163,6 +178,25 @@ const { c, next } = Astro.props;
   .metric__n { font-size: inherit; text-transform: none; letter-spacing: 0.02em; }
   @media (max-width: 700px) { .cs__metrics { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 420px) { .cs__metrics { grid-template-columns: 1fr; } }
+
+  /* ---------- what I own (animated pipeline) ---------- */
+  .cs__scope-lead { max-width: 58ch; font-size: 1.02rem; margin: -0.4rem 0 2.2rem; }
+  .own { position: relative; margin-bottom: 3.5rem; }
+  .own__rail { position: absolute; left: 0; right: 0; top: 31px; width: 100%; height: 3px; overflow: visible; z-index: 0; }
+  .own__rail .draw { stroke: var(--ink); fill: none; opacity: 0.3; }
+  .own__nodes { list-style: none; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.7rem; position: relative; z-index: 1; }
+  .own__node { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.55rem; }
+  .own__dot { width: 64px; height: 64px; border-radius: 50%; border: var(--bd) solid var(--ink); box-shadow: var(--shadow-sm); display: grid; place-items: center; transition: transform .22s var(--ease-spring); }
+  .own__node:hover .own__dot { transform: scale(1.1) rotate(-4deg); }
+  .own__icon { font-size: 1.65rem; line-height: 1; }
+  .own__n { font-size: 0.66rem; font-weight: 700; color: var(--ink-soft); letter-spacing: 0.14em; }
+  .own__t { font-size: 0.84rem; font-weight: 700; line-height: 1.22; max-width: 15ch; }
+  @media (max-width: 720px) {
+    .own__rail { display: none; }
+    .own__nodes { flex-wrap: wrap; gap: 1.6rem 0.6rem; }
+    .own__node { flex: 0 0 30%; }
+  }
+  @media (max-width: 440px) { .own__node { flex: 0 0 46%; } }
 
   /* ---------- method (how the winner got made) ---------- */
   .method { margin-bottom: 3.5rem; }

@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { linkedinPosts } from '../../data/content.ts';
+
+const postAccents = ['cobalt', 'coral', 'sun', 'acid', 'lilac', 'cobalt'];
+
+const strategy = [
+  { icon: '🪝', t: 'Scroll-stopping hooks', d: 'Attention-grabbing openings that stop the scroll in a busy B2B feed.' },
+  { icon: '📐', t: 'Built for readability', d: 'Posts structured for maximum readability and engagement, never walls of text.' },
+  { icon: '🧠', t: 'Authority insight', d: 'Valuable insights that position the author as an authority worth following.' },
+  { icon: '📖', t: 'Authentic stories', d: 'Real stories that genuinely connect with the target B2B audience.' },
+  { icon: '🎯', t: 'Strategic CTAs', d: 'Calls to action that drive meaningful interactions, not just vanity likes.' },
+  { icon: '📊', t: 'Data-led iteration', d: 'Reading the performance data to continuously refine what works.' },
+];
+
+const proof = [
+  { src: '/work-shots/linkedin/li-1.png', cap: 'Client feedback: 100+ comments in under 24 hours, and dozens of qualified leads.' },
+  { src: '/work-shots/linkedin/li-2.png', cap: 'The day a post went viral, 86 comments and 6,796 impressions, straight from the client chat.' },
+];
+---
+
+<Layout title="LinkedIn content · Lays Paiva" description="Compelling, conversion-focused B2B LinkedIn content: scroll-stopping hooks, authority insight and posts that turn into 100+ comments and qualified leads.">
+  <Nav active="work" />
+
+  <article class="cs">
+    <header class="cs__head bg-cobalt">
+      <div class="wrap">
+        <a href="/#work" class="cs__back mono">← Back to work</a>
+        <span class="tag cs__cat">LinkedIn · B2B content</span>
+        <h1 class="display cs__title">LinkedIn content</h1>
+        <p class="cs__headline">Compelling, converting B2B content that earns engagement and business.</p>
+        <p class="cs__intro">I write the LinkedIn content behind B2B brands that need more than reach: posts engineered to stop the scroll, build authority, and turn a feed into qualified leads and real business opportunities.</p>
+      </div>
+    </header>
+
+    <section class="cs__body wrap">
+      <h2 class="cs__h reveal">My LinkedIn content strategy</h2>
+      <div class="listrat">
+        {strategy.map((s) => (
+          <div class="lic card reveal--pop">
+            <span class="lic__icon" aria-hidden="true">{s.icon}</span>
+            <h3 class="lic__t">{s.t}</h3>
+            <p class="lic__d muted">{s.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="cs__h reveal">The brief</h2>
+      <div class="librief reveal">
+        <p>As a B2B content writer for <b>Onda Skim</b>, my goal was to attract increasingly qualified leads and potential clients for their products and services in the B2B market, written to convert, not just to be seen.</p>
+        <p>I was also responsible for developing the weekly newsletter <b>Influenciador Corporativo</b>, summarizing and expanding the key points covered in the Weekly Webinar.</p>
+        <a href="https://www.linkedin.com/in/dronda/recent-activity/all/" target="_blank" rel="noopener" class="btn btn--cobalt librief__cta">See the content live on LinkedIn ↗</a>
+      </div>
+
+      <h2 class="cs__h reveal">The posts I wrote</h2>
+      <p class="li-lead muted reveal">Real posts written for the client's profile. Each one built to stop the scroll, prove a result, and open a conversation. Tap to read the full copy.</p>
+      <div class="lposts">
+        {linkedinPosts.map((p, i) => (
+          <div class={`lpost card reveal accent-${postAccents[i % postAccents.length]}`}>
+            <span class="lpost__badge mono">{p.badge}</span>
+            <h3 class="lpost__hook">{p.hook}</h3>
+            <div class="lpost__body" data-post>
+              <div class="lpost__text">{p.body}</div>
+              <div class="lpost__fade" aria-hidden="true"></div>
+            </div>
+            <button class="btn btn--ghost lpost__toggle" data-post-toggle type="button">Read the full post ↓</button>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="cs__h reveal">The results, in their words</h2>
+      <div class="liproof">
+        {proof.map((p) => (
+          <figure class="lifig reveal--pop">
+            <img src={p.src} alt={p.cap} loading="lazy" />
+            <figcaption class="lifig__cap mono muted">{p.cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <a href="/work/youtube-scripts" class="cs__next bg-sun">
+      <div class="wrap cs__next-inner">
+        <span class="mono">Next project</span>
+        <span class="cs__next-name">YouTube video scripts →</span>
+      </div>
+    </a>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .cs__head { border-bottom: var(--bd) solid var(--ink); padding-block: clamp(1.2rem, 3vw, 2rem) clamp(2.5rem, 5vw, 4rem); }
+  .cs__back { display: inline-block; font-weight: 700; text-decoration: none; margin: 0.6rem 0 1.2rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
+  .cs__cat { display: block; width: fit-content; font-size: 1rem; font-weight: 700; padding: 0.4em 0.8em; border: 2px solid var(--ink); background: var(--pink); color: var(--ink); box-shadow: var(--shadow-sm); margin-bottom: 0.8rem; }
+  .cs__title { font-size: clamp(2.4rem, 7vw, 5rem); margin: 0.4rem 0 0.4rem; text-transform: uppercase; }
+  .cs__headline { font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 700; line-height: 1.25; margin-top: 0.8rem; max-width: 34ch; }
+  .cs__intro { margin-top: 1rem; max-width: 64ch; font-size: 1.02rem; line-height: 1.5; }
+
+  .cs__body { padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .cs__h { font-size: clamp(1.4rem, 3.5vw, 2.2rem); text-transform: uppercase; margin: 0 0 1.4rem; }
+  .cs__h:not(:first-child) { margin-top: 3.5rem; }
+
+  .listrat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .lic { padding: 1.4rem 1.3rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .lic__icon { font-size: 1.8rem; line-height: 1; }
+  .lic__t { font-size: 1.05rem; }
+  .lic__d { font-size: 0.9rem; line-height: 1.45; }
+  @media (max-width: 860px) { .listrat { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .listrat { grid-template-columns: 1fr; } }
+
+  .librief { max-width: 64ch; display: flex; flex-direction: column; gap: 1rem; font-size: 1.05rem; line-height: 1.55; }
+  .librief__cta { width: fit-content; margin-top: 0.4rem; text-decoration: none; }
+
+  .li-lead { max-width: 62ch; font-size: 1.02rem; margin: -0.6rem 0 1.6rem; }
+  .lposts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  .lpost { padding: 1.5rem 1.5rem 1.3rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .lpost__badge { font-size: 0.7rem; font-weight: 700; background: var(--ink); color: var(--acid); border-radius: 999px; padding: 0.32em 0.85em; width: fit-content; }
+  .lpost__hook { font-size: 1.1rem; font-weight: 700; line-height: 1.32; }
+  .lpost__body { position: relative; max-height: 7.5rem; overflow: hidden; transition: max-height .35s ease; }
+  .lpost__body.is-open { max-height: 2400px; }
+  .lpost__text { white-space: pre-line; font-size: 0.92rem; line-height: 1.55; }
+  .lpost__fade { position: absolute; left: 0; right: 0; bottom: 0; height: 4rem; background: linear-gradient(to bottom, transparent, var(--paper-2)); pointer-events: none; }
+  .lpost__body.is-open .lpost__fade { display: none; }
+  .lpost__toggle { margin-top: 0.3rem; font-size: 0.78rem; align-self: flex-start; }
+  @media (max-width: 760px) { .lposts { grid-template-columns: 1fr; } }
+
+  .liproof { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; }
+  .lifig { margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .lifig img { width: 100%; height: auto; border: var(--bd) solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--paper-2); display: block; }
+  .lifig__cap { font-size: 0.76rem; }
+  @media (max-width: 760px) { .liproof { grid-template-columns: 1fr; } }
+
+  .cs__next { display: block; text-decoration: none; color: var(--ink); border-top: var(--bd) solid var(--ink); }
+  .cs__next-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 2rem; gap: 1rem; }
+  .cs__next-name { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 700; text-transform: uppercase; }
+  .cs__next:hover .cs__next-name { text-decoration: underline 3px; text-underline-offset: 5px; }
+</style>
+
+<script>
+  import { initMotion } from '../../scripts/motion.ts';
+  initMotion();
+
+  document.querySelectorAll('[data-post-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const body = btn.previousElementSibling as HTMLElement;
+      const open = body.classList.toggle('is-open');
+      (btn as HTMLElement).textContent = open ? 'Collapse ↑' : 'Read the full post ↓';
+      if (!open) body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+</script>

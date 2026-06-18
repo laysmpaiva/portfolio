@@ -18,6 +18,7 @@ export const profile = {
   youtubeId: 'bubm4Zm6c24',
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/laysmpaiva/', handle: '/in/laysmpaiva' },
+    { label: 'Newsletter', href: 'https://a-marketers-scribblings.beehiiv.com/', handle: "A Marketer's Scribblings" },
     { label: 'Email', href: 'mailto:laysmpaiva@gmail.com', handle: 'laysmpaiva@gmail.com' },
   ],
   available: true,
@@ -56,6 +57,8 @@ export const caseStudies = [
   {
     id: 'bytebytego',
     client: 'ByteByteGo',
+    site: 'https://bytebytego.com',
+    founder: 'Alex Xu',
     person: null,
     category: 'Dev tools · Tech education',
     accent: 'cobalt',
@@ -68,21 +71,21 @@ export const caseStudies = [
     body: "ByteByteGo's system-design newsletter for engineers, with over a million technical readers. Launched under hard brand constraints, went head-to-head with the incumbent agency, and won. They had a head start. It didn't help.",
     pill: 'Won the head-to-head',
     results: [
+      { k: 'engineers reached', v: '1M+' },
       { k: 'the agency head-to-head', v: 'Won' },
-      { k: 'brand-safe creative', v: 'No name/face' },
-      { k: 'beat raw volume', v: 'Quality' },
+      { k: 'won on', v: 'Sub quality' },
     ],
     context:
-      "ByteByteGo is a system-design newsletter for software engineers, a developer-education brand with over a million technical readers. I launched paid acquisition under hard brand constraints (no name, no face) and went head-to-head with the incumbent agency.",
+      "ByteByteGo is a system-design newsletter for software engineers, a developer-education brand with over a million technical readers. I launched paid acquisition under strict brand guardrails and went head-to-head with the incumbent agency.",
     work: [
-      'Launched with brand guardrails (no name/face), uploaded buyer lists for lookalikes, navigated a US+CAN vs ROW split.',
+      'Launched with strict brand guardrails, uploaded buyer lists for lookalikes, navigated a US+CAN vs ROW split.',
       'Ran concept + copy across Confession, Stop X/Start Y, X-but-for-Y, UGC-podcast and cheat-sheet lead-magnet angles.',
       'Restructured the account into a BROAD + LEADS setup to cut cost and improve efficiency.',
       'Co-introduced cost-per-engaged-sub (CPES) and proved we beat the incumbent on the metric that maps to product value.',
     ],
     metrics: [
       { k: 'Result', v: 'Won the head-to-head' },
-      { k: 'Brand rules', v: 'No name, no face' },
+      { k: 'Creative', v: '5 angles tested' },
       { k: 'Audience', v: '1M+ engineers' },
       { k: 'Won on', v: 'Engaged-sub quality' },
       { k: 'Structure', v: 'BROAD + LEADS' },
@@ -97,6 +100,8 @@ export const caseStudies = [
   {
     id: 'jay-shetty',
     client: 'The Daily Wisdom',
+    site: 'https://news.jayshetty.me',
+    founder: 'Jay Shetty',
     person: null,
     category: 'Creator product · Wellness',
     accent: 'coral',
@@ -128,7 +133,7 @@ export const caseStudies = [
       { k: 'Reporting', v: 'Weekly Meta + Notion' },
     ],
     media: [
-      { src: '/creatives/jay-shetty/video/v1.mp4', video: true, poster: '/creatives/jay-shetty/01-im-jay-shetty.jpg' },
+      { src: '/creatives/jay-shetty/video/v1.mp4', video: true },
       { src: '/creatives/jay-shetty/02-daily-wisdom-hook1.jpg' },
       { src: '/creatives/jay-shetty/video/v2.mp4', video: true },
       { src: '/creatives/jay-shetty/03-daily-wisdom-hook2.jpg' },
@@ -137,6 +142,8 @@ export const caseStudies = [
   {
     id: 'how-to-ai',
     client: 'How to AI',
+    site: 'https://how-to-ai.guide',
+    founder: 'Ruben Hassid',
     person: null,
     category: 'AI · Education product',
     accent: 'acid',
@@ -177,6 +184,9 @@ export const caseStudies = [
   {
     id: 'workweek',
     client: 'Workweek',
+    site: 'https://workweek.com',
+    founder: 'Mike Madarasz',
+    founderLabel: 'Worked with',
     person: null,
     category: 'B2B · Fintech · Health-tech',
     accent: 'sun',
@@ -217,6 +227,8 @@ export const caseStudies = [
   {
     id: 'a-media-operator',
     client: 'A Media Operator',
+    site: 'https://amediaoperator.com',
+    founder: 'Jacob Cohen Donnelly',
     person: null,
     category: 'B2B SaaS-adjacent · Niche media',
     accent: 'lilac',
@@ -329,6 +341,197 @@ export const caseStudies = [
     ],
     gallery: [],
   },
+  {
+    id: 'linkedin-content',
+    client: 'LinkedIn content',
+    person: 'B2B · Social selling',
+    category: 'LinkedIn · B2B content',
+    accent: 'cobalt',
+    spendKey: null,
+    kind: 'product',
+    face: null,
+    logo: null,
+    emoji: '💼',
+    image: null,
+    adName: null,
+    headline: 'B2B LinkedIn content that goes viral and books qualified leads.',
+    body: "Compelling, conversion-focused LinkedIn content for B2B founders: scroll-stopping hooks, authority-building insight and a giving-first angle that turned posts into 100+ comments and qualified leads.",
+    pill: 'See the LinkedIn work →',
+  },
+  {
+    id: 'youtube-scripts',
+    client: 'YouTube video scripts',
+    person: 'Scriptwriting · Retention',
+    category: 'Scriptwriting · Audience growth',
+    accent: 'sun',
+    spendKey: null,
+    kind: 'product',
+    face: null,
+    logo: null,
+    emoji: '▶️',
+    image: null,
+    adName: null,
+    headline: 'Video scripts that hook in 15 seconds and keep viewers watching.',
+    body: "Curiosity-driven scripts for educational YouTube channels: hooks, curiosity gaps and retention structure that grow the channel, written to be watched to the end.",
+    pill: 'Read the scripting approach →',
+  },
+];
+
+// ---- What I own on a client engagement (animated scope section on each case page) ----
+export const ownership = [
+  { icon: '🎨', t: 'Creative strategy & execution', d: 'Angles, concepts and copy, start to finish.' },
+  { icon: '📈', t: 'Media buying', d: 'Account structure, budget pacing, scaling the winners.' },
+  { icon: '🔍', t: 'Funnel performance & analysis', d: 'Landing pages, tracking, subscriber quality.' },
+  { icon: '🤝', t: 'Client-facing meetings', d: 'Kickoffs, check-ins, the direct relationship.' },
+  { icon: '📊', t: 'Weekly reports', d: 'Numbers, insights and next steps, every week.' },
+  { icon: '🗓️', t: 'Biweekly analysis & reports', d: 'Deeper reviews and the editorial/newsletter read.' },
+];
+
+// ---- Real LinkedIn posts written for B2B clients (expandable on the LinkedIn page) ----
+export const linkedinPosts = [
+  {
+    hook: 'My client is a CTO who closed R$252,000/year in strategic consulting, using LinkedIn in a non-obvious way.',
+    badge: 'R$252K/yr · 4 contracts',
+    body: `He applied 3 counter-intuitive principles:
+
+1️⃣ Silent Authority
+Instead of the typical "LinkedIn guru" pattern, he focused on deep trend analysis, data-driven forecasts, real cases without self-promotion and exclusive market insights. Board members started requesting private calls.
+
+2️⃣ Reverse Networking
+Abandoned conventional tactics: zero mass messages, zero motivational posts, zero viral content, zero generic "tips". Instead, critical analysis about digital transformation, technological risks, strategic decisions and market trends.
+
+3️⃣ High-Impact Diagnosis
+In meetings with C-levels: scenario mapping, technical risk analysis, global players benchmark, 5-year ROI projections.
+
+Results in 90 days:
+→ 12 meetings with CEOs
+→ 4 signed contracts
+→ R$252,000 in annual revenue
+→ 3 interested boards
+
+The differential? He never "sold consulting." He just positioned himself as a strategic partner.
+
+✅ Comment "PROFILE" and I'll send the Singular Profile Guide he used.`,
+  },
+  {
+    hook: 'My client fired the SDR team and doubled B2B sales using only LinkedIn. No ads, no cold calls, no outbound.',
+    badge: 'Sales doubled · R$45K/mo saved',
+    body: `This client was a CEO who came to me frustrated in early 2024:
+
+6 full-time SDRs · R$45,000/month in payroll · 180 calls per day. The result? A maximum of 2 deals/month.
+
+After our analysis, we realized 93% of his time was spent chasing cold leads. Our strategy:
+Fired the entire outbound team. Repositioned the CEO on LinkedIn. Created an organic nurturing process.
+
+Results in the last 4 months:
+→ 4 deals/month (doubled)
+→ R$45k monthly savings
+→ Leads reaching out spontaneously
+→ Sales with half the cycle time
+
+Why did it work? Today, B2B decision-makers don't want to be "hunted." They research. They evaluate. They choose who to follow.
+
+✅ Comment "INBOUND" and I'll send the framework.`,
+  },
+  {
+    hook: 'My client closed R$19,000 in LinkedIn contracts using these 3 Social Selling techniques.',
+    badge: 'R$19K · 67 meetings booked',
+    body: `1️⃣ The daily micro-content rule
+Instead of long "how to be successful" posts, he shared practical tips from real interviews, common CV mistakes with examples, behind the scenes of selection processes, and weekly premium job updates. People WANTED to follow him to not miss anything.
+
+2️⃣ The "hook question" method
+Whenever someone commented, he asked ONE specific question about their professional situation. ("What's your next interview? Maybe I can give you specific tips for it.") This turned comments into natural conversations that flowed into meetings.
+
+3️⃣ Express personalized proposal
+In meetings he analyzed the person's LinkedIn beforehand, pointed out 3 clear opportunities, showed real results from other mentees, and offered a specific plan for that profile.
+
+The result, in 90 days:
+→ 67 scheduled meetings
+→ 3 premium mentorships at R$5,000
+→ 4 basic programs at R$1,000
+
+The most interesting part? He had no sales experience before. He just applied a step-by-step method I developed.
+
+✅ Comment "METHOD" and I'll send the 5 message templates that converted the most.`,
+  },
+  {
+    hook: 'My client is a CMO who went from generic consultant to closing R$200,000/year in contracts using 3 Social Selling techniques.',
+    badge: 'R$276K/yr · 5 contracts',
+    body: `Before, his profile was like everyone else's: "Digital Marketing Specialist", "Growth Hacker", "Performance Expert". Until we completely changed the strategy:
+
+1️⃣ Data over buzzwords
+Instead of trends, he analyzed ROI of real cases, showed flaws in popular strategies, debunked marketing myths and exposed numbers nobody shows. After two months, CEOs started saving his content.
+
+2️⃣ Anti-marketing in marketing
+Zero quick-result promises, zero growth hacks, zero motivational content. Instead: raw performance analysis, hidden risks in metrics, data-driven hard decisions, failure cases with learnings.
+
+3️⃣ Risk-based consulting
+In meetings he audited the entire marketing stack, projected loss scenarios, pointed out budget leaks and showed strategic blind spots.
+
+In 4 months of mentoring:
+→ 15 diagnostics for C-levels
+→ 5 advisory contracts
+→ R$276,000 in annual revenue
+→ 4 companies in pipeline
+
+He stopped competing on price when he stopped selling "marketing" and started selling "risk reduction in investments."
+
+✅ Comment "PROFILE" and I'll send the Singular Profile Guide.`,
+  },
+  {
+    hook: "My client closed a R$21,000 per month contract using these 3 Social Selling techniques. And she's a copywriter!",
+    badge: 'R$21K/month contract',
+    body: `1️⃣ Building authority and trust (without sounding commercial)
+Social Selling begins before you talk directly to the client. She positioned herself as an authority, posting content that connected with her ideal client: business owners' pain points, case studies, real results. When the time came for a direct conversation, trust was already built.
+
+2️⃣ Direct and personalized conversations
+Forget the generic "Hi, how are you?". She contacted potential clients by commenting on recent posts or topics she knew mattered to them. No direct selling, just genuine, strategic connection that generated curiosity and affinity.
+
+3️⃣ Scarcity
+When the client was almost decided, she used a subtle scarcity trigger: limited availability. She made it clear she had restricted spots for new clients. They closed the contract to secure the position.
+
+Authority building, personalized conversations, and limited availability. Not complex at all, but they helped her close a R$21,000 monthly contract.
+
+✅ Comment "Message" and I'll send the 5 templates she used.`,
+  },
+  {
+    hook: '"I have 800 decision-maker connections on LinkedIn but none are responding to my outreach."',
+    badge: '3 contracts in 2 months',
+    body: `This was the message from a frustrated consultant. I analyzed his process: optimized profile ✅, relevant content ✅, qualified connections ✅. The problem was elsewhere: how he conducted the follow-up.
+
+Most people make the same mistake: they try to book a meeting in the very first message. It's like proposing marriage on the first date.
+
+Busy decision-makers need a structured journey:
+1️⃣ First, generate identification
+2️⃣ Then, build authority
+3️⃣ Finally, create the opportunity
+
+I gave him a sequence of 7 emails that respect this natural B2B decision-maker journey.
+
+The result? He closed 3 contracts in the last 2 months. No cold calls. No coming across as an annoying salesperson. Reputation intact.
+
+✅ Comment "SEQUENCE" and I'll send the material.`,
+  },
+];
+
+// ---- Capabilities funnel: the whole growth function, not just ads ----
+export const capabilities = [
+  { t: 'Positioning & GTM', d: 'the message, before the spend' },
+  { t: 'Full-funnel acquisition', d: 'paid + creative, bought on CAC' },
+  { t: 'Lifecycle & retention', d: 'email that activates and keeps' },
+  { t: 'Analytics & North-Star', d: 'the metric that actually matters' },
+  { t: 'Experimentation', d: 'tests with a real hypothesis' },
+  { t: 'Growth engineering', d: 'AI systems that compound it' },
+];
+
+// ---- "How I'd grow your product": 0→1→scale playbook (animated flow on home) ----
+export const playbook = [
+  { n: '01', t: 'Find the real offer', d: "Who actually buys, what makes them switch, and the one promise worth leading with." },
+  { n: '02', t: 'Buy attention that converts', d: 'Creative that sounds like the customer, judged on cost-per-customer, not clicks.' },
+  { n: '03', t: 'Catch them on landing', d: 'Pages and lead magnets that earn the email, with qualification baked in from day one.' },
+  { n: '04', t: 'Turn signups into fans', d: 'Onboarding and lifecycle email that activate people fast, the part most teams skip.' },
+  { n: '05', t: 'Make the money work', d: 'Offers and funnels tied to LTV, so spend chases revenue, not vanity metrics.' },
+  { n: '06', t: 'Make it compound', d: 'Tests, dashboards and the AI tools I build, so next month beats this one.' },
 ];
 
 // ---- AI / automation tooling (each links to its own detail page) ----
@@ -490,12 +693,12 @@ export const skillsOrbit = {
 // ---- Feedbacks ----
 export const feedbacks = {
   quotes: [
-    { quote: 'An especially huge, massive thank you to Lays, you have been absolutely fantastic. A true professional.', who: 'Client team', ctx: 'creator newsletter', color: 'acid' },
-    { quote: 'Amazing. Yesterday was our best day of the year.', who: 'Client founder', ctx: 'B2B media', color: 'coral' },
-    { quote: 'Do you sleep?', who: 'Client founder', ctx: 'B2B newsletter', color: 'cobalt' },
-    { quote: 'Guess we officially won. Super happy!!!', who: 'Client', ctx: 'beat the incumbent agency', color: 'sun' },
-    { quote: "The fact that you take ownership in this and care is what separates you. Great skill to have. Treating every client like it's your own personal biz.", who: 'Client', ctx: 'via Slack', color: 'lilac' },
-    { quote: 'Quality has been monumentally improved... Well done!', who: 'Client team', ctx: 'on the creative', color: 'coral' },
+    { quote: 'An especially huge, massive thank you to Lays, you have been absolutely fantastic. A true professional.', who: 'The Daily Wisdom', href: 'https://news.jayshetty.me', ctx: 'creator newsletter', color: 'acid' },
+    { quote: 'Amazing. Yesterday was our best day of the year.', who: 'Workweek', href: 'https://workweek.com', ctx: 'Mike Madarasz', color: 'coral' },
+    { quote: 'Do you sleep?', who: 'A Media Operator', href: 'https://amediaoperator.com', ctx: 'founder', color: 'cobalt' },
+    { quote: 'Guess we officially won. Super happy!!!', who: 'ByteByteGo', href: 'https://bytebytego.com', ctx: 'beat the incumbent agency', color: 'sun' },
+    { quote: "The fact that you take ownership in this and care is what separates you. Great skill to have. Treating every client like it's your own personal biz.", who: 'Jay', ctx: 'Director, The Feed Media', color: 'lilac' },
+    { quote: 'Quality has been monumentally improved... Well done!', who: 'The Daily Wisdom', href: 'https://news.jayshetty.me', ctx: 'Anna Mullens', color: 'coral' },
   ],
-  screenshots: ['/feedbacks/fb-1.png', '/feedbacks/fb-2.png', '/feedbacks/fb-3.png', '/feedbacks/fb-4.png', '/feedbacks/fb-5.png', '/feedbacks/fb-6.png'],
+  screenshots: ['/feedbacks/fb-1.png', '/feedbacks/fb-2.png', '/feedbacks/fb-3.png', '/feedbacks/fb-4.png', '/feedbacks/fb-5.png', '/feedbacks/fb-6.png', '/work-shots/linkedin/li-1.png', '/work-shots/linkedin/li-2.png'],
 };

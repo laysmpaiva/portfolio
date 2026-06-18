@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const approach = [
+  { icon: '🪝', t: 'Hooks in 15 seconds', d: 'A powerful opening that captures attention before anyone can swipe away.' },
+  { icon: '🧲', t: 'Retention structure', d: 'Content structured to hold interest all the way through, not just at the start.' },
+  { icon: '🌀', t: 'Curiosity gaps', d: 'Open loops that reduce drop-off and keep viewers watching for the answer.' },
+  { icon: '🎭', t: 'Teach + entertain', d: 'Educational substance balanced with a delivery that is genuinely fun to watch.' },
+  { icon: '🔔', t: 'Strategic CTAs', d: 'Calls to action placed to convert views into actual subscriber growth.' },
+  { icon: '🔎', t: 'Retention + search', d: 'Scripts optimized for both audience retention and search visibility.' },
+];
+
+const channel = {
+  name: 'Trust Me Bro',
+  handle: '@TrustMeBroOfficial',
+  url: 'https://www.youtube.com/@TrustMeBroOfficial',
+  subs: '1.3M subscribers',
+};
+const videos = ['SsAgEXJ42SY', 'B3HL28vbxtc', 'EY9V8YyoKZA', 'eIIeP5AEEdU', 'gdWRcVovAXQ', 'WPZDY5HAsRQ'];
+---
+
+<Layout title="YouTube video scripts · Lays Paiva" description="Engaging, curiosity-driven YouTube scripts that hook viewers in the first 15 seconds, hold retention and grow the channel.">
+  <Nav active="work" />
+
+  <article class="cs">
+    <header class="cs__head bg-sun">
+      <div class="wrap">
+        <a href="/#work" class="cs__back mono">← Back to work</a>
+        <span class="tag cs__cat">Scriptwriting · Audience growth</span>
+        <h1 class="display cs__title">YouTube video scripts</h1>
+        <p class="cs__headline">Scripts that hook in 15 seconds and keep viewers watching.</p>
+        <p class="cs__intro">I write the engaging, curiosity-driven scripts behind educational YouTube channels: the kind that grab attention in the first few seconds, then explain a topic in a way that is simple, captivating and impossible to click away from. Written to be watched to the end, and to grow the channel.</p>
+      </div>
+    </header>
+
+    <section class="cs__body wrap">
+      <h2 class="cs__h reveal">My scripting approach</h2>
+      <div class="ystep">
+        {approach.map((a) => (
+          <div class="yc card reveal--pop">
+            <span class="yc__icon" aria-hidden="true">{a.icon}</span>
+            <h3 class="yc__t">{a.t}</h3>
+            <p class="yc__d muted">{a.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="cs__h reveal">A channel I wrote for</h2>
+      <a href={channel.url} target="_blank" rel="noopener" class="ychannel card reveal">
+        <span class="ychannel__play" aria-hidden="true">▶</span>
+        <div class="ychannel__meta">
+          <span class="ychannel__name">{channel.name}</span>
+          <span class="ychannel__subs mono">{channel.subs} · {channel.handle}</span>
+        </div>
+        <span class="ychannel__cta mono">Visit channel ↗</span>
+      </a>
+      <p class="ylead muted reveal">A 1M+ subscriber educational channel I wrote scripts for. The audience spanned kids, teens and adults, so the job was always the same: hook fast, then keep them watching to the end.</p>
+      <div class="ythumbs">
+        {videos.map((id) => (
+          <a class="ythumb reveal--pop" href={`https://www.youtube.com/watch?v=${id}`} target="_blank" rel="noopener">
+            <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="Trust Me Bro video" loading="lazy" width="320" height="180" />
+            <span class="ythumb__play" aria-hidden="true">▶</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <a href="/work/linkedin-content" class="cs__next bg-cobalt">
+      <div class="wrap cs__next-inner">
+        <span class="mono">Next project</span>
+        <span class="cs__next-name">LinkedIn content →</span>
+      </div>
+    </a>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .cs__head { border-bottom: var(--bd) solid var(--ink); padding-block: clamp(1.2rem, 3vw, 2rem) clamp(2.5rem, 5vw, 4rem); }
+  .cs__back { display: inline-block; font-weight: 700; text-decoration: none; margin: 0.6rem 0 1.2rem; padding: 0.4em 0.8em; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
+  .cs__cat { display: block; width: fit-content; font-size: 1rem; font-weight: 700; padding: 0.4em 0.8em; border: 2px solid var(--ink); background: var(--pink); color: var(--ink); box-shadow: var(--shadow-sm); margin-bottom: 0.8rem; }
+  .cs__title { font-size: clamp(2.4rem, 7vw, 5rem); margin: 0.4rem 0 0.4rem; text-transform: uppercase; }
+  .cs__headline { font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 700; line-height: 1.25; margin-top: 0.8rem; max-width: 32ch; }
+  .cs__intro { margin-top: 1rem; max-width: 64ch; font-size: 1.02rem; line-height: 1.5; }
+
+  .cs__body { padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .cs__h { font-size: clamp(1.4rem, 3.5vw, 2.2rem); text-transform: uppercase; margin: 0 0 1.4rem; }
+  .cs__h:not(:first-child) { margin-top: 3.5rem; }
+
+  .ystep { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+  .yc { padding: 1.5rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .yc__icon { font-size: 1.9rem; line-height: 1; }
+  .yc__t { font-size: 1.1rem; }
+  .yc__d { font-size: 0.9rem; line-height: 1.45; }
+  @media (max-width: 860px) { .ystep { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .ystep { grid-template-columns: 1fr; } }
+
+  .ychannel { display: flex; align-items: center; gap: 1.1rem; padding: 1.2rem 1.4rem; text-decoration: none; color: inherit; transition: transform .2s var(--ease-out), box-shadow .25s ease; }
+  .ychannel:hover { transform: translate(-3px,-4px); box-shadow: var(--shadow); }
+  .ychannel__play { display: grid; place-items: center; width: 3rem; height: 3rem; flex: 0 0 auto; border-radius: 50%; background: #FF0000; color: #fff; font-size: 1.1rem; border: var(--bd) solid var(--ink); }
+  .ychannel__meta { display: flex; flex-direction: column; gap: 0.15rem; margin-right: auto; }
+  .ychannel__name { font-size: 1.4rem; font-weight: 700; }
+  .ychannel__subs { font-size: 0.82rem; color: var(--ink-soft); }
+  .ychannel__cta { font-size: 0.82rem; font-weight: 700; color: var(--cobalt); }
+
+  .ylead { max-width: 58ch; font-size: 1.0rem; margin: 1.4rem 0 1.4rem; }
+  .ythumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .ythumb { position: relative; display: block; border: var(--bd) solid var(--ink); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); aspect-ratio: 16 / 9; background: var(--ink); transition: transform .2s var(--ease-out), box-shadow .25s ease; }
+  .ythumb:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .ythumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ythumb__play { position: absolute; inset: 0; margin: auto; width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: 50%; background: rgba(255,0,0,0.92); color: #fff; font-size: 1rem; border: 3px solid #fff; box-shadow: var(--shadow-sm); }
+  @media (max-width: 640px) { .ythumbs { grid-template-columns: 1fr 1fr; } }
+
+  .cs__next { display: block; text-decoration: none; color: var(--paper-2); border-top: var(--bd) solid var(--ink); }
+  .cs__next-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 2rem; gap: 1rem; }
+  .cs__next-name { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 700; text-transform: uppercase; }
+  .cs__next:hover .cs__next-name { text-decoration: underline 3px; text-underline-offset: 5px; }
+</style>
+
+<script>
+  import { initMotion } from '../../scripts/motion.ts';
+  initMotion();
+</script>

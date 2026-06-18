@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { profile, stats, caseStudies, tooling, feedbacks } from '../data/content.ts';
+import { profile, stats, caseStudies, tooling, feedbacks, capabilities, playbook } from '../data/content.ts';
 import showcase from '../data/showcase.json';
 
 const fmtSpend = (key: string) => {
@@ -15,6 +15,10 @@ const fmtSpend = (key: string) => {
 const totalSpend = showcase.totalManagedSpend
   ? '$' + (showcase.totalManagedSpend / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M+'
   : null;
+
+// palette progressions for the animated capability cards + growth-flow nodes
+const capColors = ['cobalt', 'coral', 'sun', 'acid', 'lilac', 'cobalt'];
+const playColors = ['cobalt', 'lilac', 'coral', 'sun', 'acid', 'pink'];
 ---
 
 <Layout>
@@ -85,9 +89,10 @@ const totalSpend = showcase.totalManagedSpend
   <!-- ================= AI TOOLING ================= -->
   <section id="tooling" class="tooling">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">01</span> I build my own tools</h2>
+      <h2 class="section-h reveal"><span class="num">01</span> I build the systems, not just the campaigns</h2>
       <p class="section-lead reveal muted">
-        Buying media is the easy part; the system around it is where growth actually compounds. I ship AI agents and automations that make the whole team faster. This is <span class="grad">vibe marketing</span> in practice.
+        Most marketers stop at the campaign. I ship the AI agents and automations that run growth itself, so a lean team moves like a big one.<br />
+        Call it <span class="grad">growth engineering</span>, or vibe marketing. Either way, I build it myself.
       </p>
       <div class="tooling__grid">
         {tooling.map((t) => (
@@ -139,14 +144,6 @@ const totalSpend = showcase.totalManagedSpend
                 <h3 class="case__client">{c.client}{c.person ? <span class="muted case__person"> / {c.person}</span> : null}</h3>
                 <p class="case__headline">{c.headline}</p>
                 <p class="case__text muted">{c.body}</p>
-                <div class="case__results">
-                  {c.results.map((r) => (
-                    <div class="result">
-                      <span class="result__v">{r.v}</span>
-                      <span class="result__k mono">{r.k}{r.note ? <span class="result__n muted"> · {r.note}</span> : null}</span>
-                    </div>
-                  ))}
-                </div>
                 <div class="case__foot">
                   <span class="sticker case__pill r-2">{c.pill}</span>
                   <span class="case__more mono">View case →</span>
@@ -159,20 +156,44 @@ const totalSpend = showcase.totalManagedSpend
     </div>
   </section>
 
-  <!-- ================= STATS ================= -->
-  <section id="impact" class="stats">
+  <!-- ================= CAPABILITIES (growth-function funnel) ================= -->
+  <section id="capabilities" class="caps">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">03</span> The receipts</h2>
-      <div class="stats__grid">
-        {stats.map((s) => (
-          <div class={`stat card reveal--pop accent-${s.color}`}>
-            <div class="stat__num grad-ink" data-count={s.value} data-prefix={s.prefix ?? ''} data-suffix={s.suffix ?? ''}>
-              {s.prefix ?? ''}{s.value}{s.suffix ?? ''}
-            </div>
-            <p class="stat__label">{s.label}</p>
-            <p class="stat__sub mono muted">{s.sub}</p>
+      <h2 class="section-h reveal">Not a media buyer.<br />I run the whole growth function<span class="hero__dot">.</span></h2>
+      <p class="section-lead reveal muted">
+        Paid ads are the part you can see. What I actually run is the whole machine that turns a product into revenue, and the <span class="grad">systems</span> that keep it compounding.
+      </p>
+      <div class="gfunnel">
+        {capabilities.map((cap, i) => (
+          <div class={`gfunnel__stage bg-${capColors[i % capColors.length]} reveal`} style={`--w:${100 - i * 7}%`}>
+            <span class="gfunnel__t">{cap.t}</span>
+            <span class="gfunnel__d">{cap.d}</span>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PLAYBOOK (in place of receipts) ================= -->
+  <section id="playbook" class="play">
+    <div class="wrap">
+      <h2 class="section-h reveal">How I'd grow your product</h2>
+      <p class="section-lead reveal muted">
+        Drop me into a SaaS, a newsletter or a launch from zero and this is the loop I run. Each stage hands off to the next, then feeds back into it.
+      </p>
+      <div class="flow">
+        <svg class="flow__rail" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true">
+          <path class="draw" d="M2 1 H998" stroke-width="2.5" />
+        </svg>
+        <ol class="flow__nodes">
+          {playbook.map((s, i) => (
+            <li class="flow__node reveal--pop">
+              <span class="flow__dot" style={`--c:var(--${playColors[i % playColors.length]})`}>{s.n}</span>
+              <span class="flow__t">{s.t}</span>
+              <span class="flow__d muted">{s.d}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   </section>
@@ -180,7 +201,7 @@ const totalSpend = showcase.totalManagedSpend
   <!-- ================= FEEDBACKS ================= -->
   <section id="feedbacks" class="fb">
     <div class="wrap">
-      <h2 class="section-h reveal"><span class="num">04</span> What people say</h2>
+      <h2 class="section-h reveal"><span class="num">03</span> What people say</h2>
       <p class="fb__label fb__label--first eyebrow reveal">◆ Verified client reviews</p>
       <div class="fb__shots">
         {feedbacks.screenshots.map((src, i) => (
@@ -194,7 +215,7 @@ const totalSpend = showcase.totalManagedSpend
         {feedbacks.quotes.map((f) => (
           <blockquote class={`fb__q card reveal--pop accent-${f.color}`}>
             <p class="fb__text">“{f.quote}”</p>
-            <footer class="fb__who mono">{f.who} <span class="muted">· {f.ctx}</span></footer>
+            <footer class="fb__who mono">{f.href ? <a href={f.href} target="_blank" rel="noopener" class="fb__link">{f.who}</a> : f.who} <span class="muted">· {f.ctx}</span></footer>
           </blockquote>
         ))}
       </div>
@@ -209,6 +230,7 @@ const totalSpend = showcase.totalManagedSpend
       <div class="contact__actions reveal">
         <a href={`mailto:${profile.email}`} class="btn btn--cobalt">Email me ✉</a>
         <a href={profile.socials[0].href} class="btn btn--ghost">LinkedIn ↗</a>
+        <a href="https://a-marketers-scribblings.beehiiv.com/" target="_blank" rel="noopener" class="btn btn--ghost">Read my newsletter ↗</a>
       </div>
     </div>
   </section>
@@ -304,6 +326,8 @@ const totalSpend = showcase.totalManagedSpend
   .fb__q { padding: 1.5rem 1.5rem 1.2rem; margin: 0; }
   .fb__text { font-size: 1.15rem; font-weight: 500; line-height: 1.35; }
   .fb__who { margin-top: 0.9rem; font-size: 0.82rem; font-weight: 700; }
+  .fb__link { color: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--coral); }
+  .fb__link:hover { color: var(--coral); }
   .fb__label { margin: 2.6rem 0 1.1rem; }
   .fb__label--first { margin-top: 0; }
   .fb__shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
@@ -327,6 +351,27 @@ const totalSpend = showcase.totalManagedSpend
   .tool__more { display: inline-block; margin-top: 0.9rem; font-size: 0.78rem; font-weight: 700; color: var(--acid); }
   .tooling__ps { margin-top: 2rem; font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; color: var(--paper); }
   @media (max-width: 700px) { .tooling__grid { grid-template-columns: 1fr; } }
+
+  /* ---------- CAPABILITIES (growth-function funnel) ---------- */
+  .gfunnel { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; margin-top: 2.4rem; }
+  .gfunnel__stage { width: var(--w); min-width: min(100%, 300px); max-width: 100%; border: var(--bd) solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-sm); padding: 0.95rem 1.6rem; display: flex; align-items: baseline; justify-content: center; gap: 0.7rem; text-align: center; flex-wrap: wrap; transition: transform .2s var(--ease-out), box-shadow .25s ease; }
+  .gfunnel__stage:hover { transform: scale(1.025); box-shadow: var(--shadow); }
+  .gfunnel__t { font-weight: 800; font-size: clamp(1.02rem, 2.1vw, 1.35rem); letter-spacing: -0.01em; }
+  .gfunnel__d { font-family: var(--font-mono); font-size: 0.8rem; opacity: 0.82; }
+  @media (max-width: 560px) { .gfunnel__stage { width: 100% !important; flex-direction: column; gap: 0.15rem; padding: 0.9rem 1.1rem; } }
+
+  /* ---------- PLAYBOOK (animated growth flow) ---------- */
+  .flow { position: relative; margin-top: 2.4rem; }
+  .flow__rail { position: absolute; left: 0; right: 0; top: 37px; width: 100%; height: 3px; overflow: visible; z-index: 0; }
+  .flow__rail .draw { stroke: var(--ink); fill: none; opacity: 0.28; }
+  .flow__nodes { list-style: none; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.7rem; position: relative; z-index: 1; padding: 0; margin: 0; }
+  .flow__node { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.55rem; }
+  .flow__dot { width: 74px; height: 74px; border-radius: 50%; background: var(--paper-2); border: 5px solid var(--c, var(--cobalt)); box-shadow: var(--shadow-sm); display: grid; place-items: center; font-family: var(--font-mono); font-weight: 800; font-size: 1.45rem; color: var(--ink); transition: transform .26s var(--ease-spring); }
+  .flow__node:hover .flow__dot { transform: scale(1.12) translateY(-3px); }
+  .flow__t { font-size: 0.96rem; font-weight: 700; line-height: 1.2; }
+  .flow__d { font-size: 0.8rem; line-height: 1.42; max-width: 20ch; }
+  @media (max-width: 860px) { .flow__rail { display: none; } .flow__nodes { flex-wrap: wrap; gap: 1.8rem 0.7rem; } .flow__node { flex: 0 0 30%; } }
+  @media (max-width: 480px) { .flow__node { flex: 0 0 46%; } }
 
   /* ---------- CONTACT ---------- */
   .contact {
